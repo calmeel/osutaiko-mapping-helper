@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>osu!taiko Mapping Helper 使用説明書</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">User Guide</p>
+      <h1>osu!taiko Mapping Helper 使用説明書</h1>
+    </div>
+    <div class="header-meta" aria-label="ドキュメント情報">
+      <span>Version 1.1.0-beta</span>
+      <span>Japanese</span>
+      <a href="https://github.com/miyagish1m4/osutaiko-mapping-helper">GitHub</a>
+    </div>
+  </header>
+
+  <main class="manual-shell">
+    <input checked type="radio" name="manual-tab" id="tab-overview">
+    <input type="radio" name="manual-tab" id="tab-start">
+    <input type="radio" name="manual-tab" id="tab-sv">
+    <input type="radio" name="manual-tab" id="tab-utility">
+    <input type="radio" name="manual-tab" id="tab-bg">
+    <input type="radio" name="manual-tab" id="tab-timing-property">
+    <input type="radio" name="manual-tab" id="tab-settings">
+    <input type="radio" name="manual-tab" id="tab-safety">
+    <input type="radio" name="manual-tab" id="tab-trouble">
+
+    <nav class="tab-list" aria-label="説明書の章">
+      <label for="tab-overview">概要</label>
+      <label for="tab-start">導入と基本操作</label>
+      <label for="tab-sv">SV Editor</label>
+      <label for="tab-utility">Utility</label>
+      <label for="tab-bg">BG Setter</label>
+      <label for="tab-timing-property">Timing Property</label>
+      <label for="tab-settings">設定</label>
+      <label for="tab-safety">バックアップと注意</label>
+      <label for="tab-trouble">困ったとき</label>
+    </nav>
+
+    <section class="tab-panel" id="overview-panel">
+      <div class="panel-header">
+        <p class="eyebrow">Overview</p>
+        <h2>このツールの役割</h2>
+        <p>osu! のエディタで開いている taiko 譜面を読み取り、SV 編集や一括編集を補助します。操作対象は現在 osu! 側で選択されている .osu ファイル、または同じ曲フォルダ内の全難易度です。</p>
+      </div>
+
+      <div class="dense-grid">
+        <article>
+          <h3>リアルタイムに譜面を読む</h3>
+          <p>起動中の osu! プロセスから、現在開いている曲フォルダ、.osu ファイル名、再生位置、メタデータ、背景画像の情報を取得します。ツール側で譜面名が表示されれば、処理対象を認識できています。</p>
+        </article>
+        <article>
+          <h3>.osu を直接編集する</h3>
+          <p>SV Editor、Utility、BG Setter は .osu ファイルを書き換えます。処理後は osu! のエディタで <kbd>Ctrl</kbd> + <kbd>L</kbd> を押して、ファイルを再読み込みしてください。</p>
+        </article>
+        <article>
+          <h3>主な機能</h3>
+          <p>SV の適用・削除、ヒットサウンド付与、ノーツ座標変更、タグ編集、設定コピー、再スナップ、背景 Y 位置調整、バックアップ保持数の管理を扱います。</p>
+        </article>
+        <article>
+          <h3>補助情報の確認</h3>
+          <p>Timing Property では、osu! の現在位置に対応する Timing、BPM、SV、Volume、見た目 BPM を確認できます。SV 作業中の値確認に使います。</p>
+        </article>
+      </div>
+
+      <div class="callout">
+        <h3>まず覚えること</h3>
+        <p>このツールの基本は「osu! で対象譜面を開く」「ツールで条件を入力する」「実行する」「osu! で <kbd>Ctrl</kbd> + <kbd>L</kbd> を押す」です。成功メッセージだけでは osu! 側の表示は更新されないため、再読み込みまでを1セットにしてください。</p>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="start-panel">
+      <div class="panel-header">
+        <p class="eyebrow">Start</p>
+        <h2>導入と基本操作</h2>
+        <p>ビルド、起動、タイミング指定、実行後の確認までの共通手順です。</p>
+      </div>
+
+      <div class="content-columns">
+        <article class="block">
+          <h3>必要な環境</h3>
+          <ul>
+            <li>Windows</li>
+            <li>osu! stable</li>
+            <li>.NET 8 Desktop Runtime、または .NET 8 SDK</li>
+            <li>ソースからビルドする場合は Visual Studio 2022 以降</li>
+          </ul>
+        </article>
+        <article class="block">
+          <h3>起動方法</h3>
+          <p>配布されている実行ファイルがある場合は、基本的に <code>osu!taiko Mapping Helper.exe</code> を実行すれば起動できます。先に osu! を起動し、エディタで対象の taiko 譜面を開いておくと、ツールが現在の譜面を読み取れます。</p>
+          <p>ソースから動かす場合だけ、Visual Studio で <code>osu!taiko Mapping Helper.sln</code> を開いてビルドします。開発者向けのコマンドライン例は次の通りです。</p>
+          <pre><code>dotnet restore
+dotnet build -c Release</code></pre>
+        </article>
+      </div>
+
+      <article class="block">
+        <h3>基本の流れ</h3>
+        <ol class="compact-steps">
+          <li>osu! を起動し、エディタで編集したい taiko 譜面を開きます。</li>
+          <li>osu!taiko Mapping Helper を起動します。</li>
+          <li>ツール上部の譜面名や背景表示が更新されることを確認します。</li>
+          <li>メニューから <strong>SV Editor</strong>、<strong>Utility</strong>、<strong>BG Setter</strong> を選びます。</li>
+          <li>条件を入力して <strong>実行</strong> または <strong>Apply</strong> を押します。</li>
+          <li>成功メッセージが出たら osu! 側で <kbd>Ctrl</kbd> + <kbd>L</kbd> を押します。</li>
+        </ol>
+      </article>
+
+      <article class="block">
+        <h3>操作の前提</h3>
+        <p>Timing、SV、Volume などの入力欄は各機能タブで説明します。まずは、ツールが現在の譜面を認識していることと、実行後に osu! 側で再読み込みすることだけ覚えておけば大丈夫です。</p>
+      </article>
+    </section>
+
+    <section class="tab-panel" id="sv-panel">
+      <div class="panel-header">
+        <p class="eyebrow">SV Editor</p>
+        <h2>SV の適用・削除</h2>
+        <p>GUI の上から順番に、Timing、SV、Volume、対象、実行までを説明します。SV Editor はこのツールの中心機能なので、入力値が .osu ファイルへどう反映されるかも含めて確認してください。</p>
+      </div>
+
+      <article class="block">
+        <h3>1. Timing</h3>
+        <p>処理する範囲の始点と終点を指定します。入力は <code>mm:ss:fff</code> 形式、またはミリ秒の整数に対応しています。たとえば <code>01:23:456</code> と <code>83456</code> はどちらも受け付けます。</p>
+        <p><strong>Set Start Timing</strong> と <strong>Set End Timing</strong> は、osu! の現在再生位置をそれぞれ始点・終点に入れるボタンです。osu! 側で曲を再生または移動してから押すと、手入力より正確に範囲を取りやすくなります。</p>
+        <p><strong>⇔</strong> ボタンは始点と終点を入れ替えます。始点が終点より後ろにある状態では実行時にエラーになります。</p>
+      </article>
+
+      <article class="block">
+        <h3>2. SV</h3>
+        <p>SV チェックを有効にすると、追加または更新される緑線の SV を指定できます。始点側の入力欄が開始値、終点側の入力欄が終了値です。終点の値は <strong>終点の有効化</strong> が有効なときに使用されます。</p>
+        <p>SV は 0 より大きい数値を入力します。小数も使用できます。SV チェックを外した場合は、処理地点の直前にある緑線の SV を参照して、SV 値を明示的には変更しません。</p>
+        <p><strong>等差</strong> は始点から終点まで一定量ずつ変化します。<strong>等比</strong> は比率で変化するため、値が連続的に倍率変化するカーブを作りたい場合に向いています。</p>
+        <div class="formula-grid" aria-label="SV 計算式">
+          <div>
+            <strong>等差</strong>
+            <code>SV(t) = SV_start + (SV_end - SV_start) * p</code>
+          </div>
+          <div>
+            <strong>等比</strong>
+            <code>SV(t) = SV_start * (SV_end / SV_start) ^ p</code>
+          </div>
+        </div>
+        <p class="small-note"><code>p</code> は範囲内の進行率です。始点では <code>0</code>、終点では <code>1</code> になります。</p>
+        <div class="sv-graph-pair">
+          <figure class="sv-graph" aria-label="終点の SV が始点より高い場合の変化イメージ">
+            <svg viewBox="0 0 360 150" role="img" aria-labelledby="sv-graph-up-title sv-graph-up-desc">
+              <title id="sv-graph-up-title">上昇する SV 変化</title>
+              <desc id="sv-graph-up-desc">横軸が Timing、縦軸が SV。等差は上昇する直線、等比は上昇する曲線として描かれている。</desc>
+              <line class="axis" x1="36" y1="118" x2="330" y2="118"></line>
+              <line class="axis" x1="36" y1="118" x2="36" y2="22"></line>
+              <text x="300" y="140">Timing</text>
+              <text x="8" y="30">SV</text>
+              <line class="linear-line" x1="48" y1="108" x2="310" y2="26"></line>
+              <path class="geometric-line" d="M48 108 C112 104, 184 86, 238 58 C272 40, 292 30, 310 26"></path>
+              <circle class="point" cx="48" cy="108" r="3"></circle>
+              <circle class="point" cx="310" cy="26" r="3"></circle>
+              <text class="legend linear" x="62" y="54">等差</text>
+              <text class="legend geometric" x="222" y="96">等比</text>
+            </svg>
+            <figcaption>終点の SV が高い場合</figcaption>
+          </figure>
+          <figure class="sv-graph" aria-label="終点の SV が始点より低い場合の変化イメージ">
+            <svg viewBox="0 0 360 150" role="img" aria-labelledby="sv-graph-down-title sv-graph-down-desc">
+              <title id="sv-graph-down-title">下降する SV 変化</title>
+              <desc id="sv-graph-down-desc">横軸が Timing、縦軸が SV。等差は下降する直線、等比は下降する曲線として描かれている。</desc>
+              <line class="axis" x1="36" y1="118" x2="330" y2="118"></line>
+              <line class="axis" x1="36" y1="118" x2="36" y2="22"></line>
+              <text x="300" y="140">Timing</text>
+              <text x="8" y="30">SV</text>
+              <line class="linear-line" x1="48" y1="26" x2="310" y2="108"></line>
+              <path class="geometric-line" d="M48 26 C108 56, 170 82, 238 96 C270 103, 294 106, 310 108"></path>
+              <circle class="point" cx="48" cy="26" r="3"></circle>
+              <circle class="point" cx="310" cy="108" r="3"></circle>
+              <text class="legend linear" x="216" y="70">等差</text>
+              <text class="legend geometric" x="142" y="102">等比</text>
+            </svg>
+            <figcaption>終点の SV が低い場合</figcaption>
+          </figure>
+        </div>
+        <p class="small-note">同じ始点・終点でも、等差は直線的、等比は倍率的に変化します。</p>
+      </article>
+
+      <article class="block">
+        <h3>3. Volume</h3>
+        <p>Volume チェックを有効にすると、緑線の音量を指定できます。始点側の入力欄が開始 Volume、終点側の入力欄が終了 Volume です。Volume は 5 から 100 の整数で入力します。小数は受け付けません。</p>
+        <p>Volume チェックを外した場合は、処理地点の直前にある TimingPoint の Volume を参照します。音量を変えずに SV だけを編集したい場合は、Volume を無効にしておくのが基本です。</p>
+      </article>
+
+      <div class="content-columns">
+        <article class="block">
+          <h3>4. 始点に適用</h3>
+        <p>有効にすると、Timing 始点と同じタイミングにある対象にも緑線を置きます。無効にすると、始点ちょうどの対象は処理から除外されます。</p>
+        </article>
+        <article class="block">
+          <h3>5. 終点に適用</h3>
+          <p>有効にすると、Timing 終点と同じタイミングにある対象にも緑線を置きます。無効にすると、終点ちょうどの対象は処理から除外されます。前後の SV とつなげたい場合に使い分けます。</p>
+        </article>
+      </div>
+
+      <article class="block">
+        <h3>6. 相対速度変化</h3>
+        <p>設定のアドバンスモードを有効にすると表示されます。通常は入力した SV をそのまま使いますが、相対速度変化では処理地点の直前 SV を基準にして、新しい SV を計算します。</p>
+        <p><strong>乗算</strong> は <code>(現在の SV - 基準 SV) * 入力 SV + 基準 SV</code> の形で変化します。<strong>加算</strong> は現在の SV に入力 SV を足します。基本的には <strong>特定のオブジェクトのみ</strong> と組み合わせて使う機能で、大音符のみに SV を与えたい場合などに有効です。</p>
+        <p><strong>終点の有効化</strong> を併用すると、相対変化の始点値と終点値を別々に指定できます。終点の有効化を外した場合は、始点側の値を基準にした一定の相対変化として扱う使い方になります。</p>
+        <p>相対速度変化は、既に置かれている SV の流れを完全に上書きするよりも、「今の SV に対して一部のオブジェクトだけ強調を足す」場面に向いています。全体の SV カーブを新しく作る場合は、通常の SV 指定の方が分かりやすいです。</p>
+      </article>
+
+      <article class="block">
+        <h3>kiai</h3>
+        <p><strong>kiai</strong> チェックを有効にすると、追加する緑線の kiai フラグを ON にします。チェックを外している場合は、基本的に直前の TimingPoint の kiai 状態を引き継ぎます。</p>
+        <p>そのため、既存の kiai 区間を維持したいだけなら、このチェックボックスを ON にしなくても大丈夫です。新しく置く SV 線から明示的に kiai を開始したい場合に使う、と考えるのが自然です。</p>
+      </article>
+
+      <div class="content-columns">
+        <article class="block">
+          <h3>7. 適用タブ</h3>
+          <p>指定範囲内の対象タイミングに緑線を追加します。SV や Volume を有効にしている場合は、始点から終点までの位置に応じて値を計算します。既存の緑線と重なる場合は、処理対象やオフセットに応じて既存緑線を整理しながら出力します。</p>
+          <p>整理の内容として、対象ノーツの直前から対象ノーツまでの間にある既存緑線は、今回置く線と効果が重複しないよう削除対象になることがあります。ただし、選択していないオブジェクトの効果を戻すために必要な線や、kiai の切り替わりを維持するために必要な線は残す・値を引き継ぐように扱われます。</p>
+        </article>
+        <article class="block">
+          <h3>8. 削除タブ</h3>
+          <p>指定範囲内の緑線を削除します。赤線は削除しません。削除後は、範囲内や範囲後のスライダーの見た目が崩れにくいよう、必要に応じてsliderLengthを補正します。</p>
+        </article>
+      </div>
+
+      <article class="block">
+        <h3>9. 1/16オフセット</h3>
+        <p>チェックすると、Objects のみで緑線を置くときに、対象ノーツの少し前へ緑線をずらします。設定画面のオフセットタイプが <strong>1/16 (1/12) offset</strong> の場合は、BPM から 1/16 分の時間を計算して前に置きます。</p>
+        <p><strong>1/12 を含める</strong> を有効にすると、1/12 snap の HitObject が含まれる場合に、前の HitObject の方へ SV 線が近づきすぎないように 1/12 分のオフセットを使います。それ以外の配置では 1/16 が使われます。設定画面で <strong>ms offset</strong> を選んでいる場合は、入力したミリ秒分ずらします。</p>
+        <p>Volume 変化を伴う SV 線を設置する場合は、音量変化がノーツの発音タイミングに食い込みにくくなるため、このチェックボックスを使うことを推奨します。</p>
+      </article>
+
+      <article class="block">
+        <h3>10. 処理対象の選び方</h3>
+        <div class="definition-list">
+          <div><strong>Objects のみ</strong><span>HitObject、小節線、BookMark、特定オブジェクトを基準に緑線を追加します。ノーツに沿って SV を変えたいときの基本モードです。</span></div>
+          <div><strong>BeatSnaps</strong><span>赤線の BPM からビートスナップ間隔を計算し、指定範囲内に一定間隔で緑線を追加します。赤線をまたぐ場合は次の BPM に合わせて間隔を再計算します。ノーツがない場所で音量変化のグラデーションを設置したい場合などに使います。</span></div>
+          <div><strong>緑線</strong><span>既存の Inherited Point を基準に SV や Volume を更新します。すでに置いてある緑線のカーブだけを整えたい場合に使います。</span></div>
+        </div>
+      </article>
+
+      <article class="block">
+        <h3>Objects のみ の詳細</h3>
+        <div class="manual-table">
+          <div><strong>すべての HitObject</strong><span>範囲内の HitObject と小節線を対象にします。通常ノーツ、スライダー、スピナーなど、譜面上のオブジェクトに沿って緑線を置きます。BookMark だけの地点は含まれませんが、BookMark と同じタイミングに実ノーツがある場合は、その実ノーツとして対象になります。</span></div>
+          <div><strong>小節線</strong><span>赤線の BPM と拍子から計算される小節位置を対象にします。ノーツがない小節位置にも緑線を置けます。</span></div>
+          <div><strong>小節線上のみ</strong><span>小節線と同じタイミングにある HitObject だけを対象にします。小節頭のノーツだけに効果を付けたい場合に使います。</span></div>
+          <div><strong>小節線上以外</strong><span>小節線と同じタイミングではない HitObject を対象にします。小節頭を避けてノーツ側だけを処理したい場合に使います。</span></div>
+          <div><strong>BookMark</strong><span>Editor セクションの Bookmarks を対象にします。osu! エディタで目印を置いた地点へ緑線を置く用途です。</span></div>
+          <div><strong>BookMark のみ</strong><span>BookMark と同じタイミングにある地点だけを対象にします。BookMark 位置にノーツがある場合は、そのノーツ位置として扱われます。</span></div>
+          <div><strong>BookMark 以外</strong><span>BookMark が付いていない HitObject を対象にします。目印を付けた場所だけを避けたい場合に使います。</span></div>
+          <div><strong>特定のオブジェクトのみ</strong><span>通常 Don、通常 Kat、大音符 Don、大音符 Kat、Slider、Spinner を個別に選び、選択した種類に一致するオブジェクトだけを処理します。</span></div>
+        </div>
+      </article>
+
+      <article class="block">
+        <h3>特定のオブジェクトのみ</h3>
+        <p>選択していない種類のオブジェクトに対応する既存緑線は、基本的に触りません。</p>
+        <p>このモードでは、選んだオブジェクトの直前または同時刻に緑線を置き、次のノーツ側にも必要な線を自動で置いて SV が意図せず次の区間へ残り続けないようにします。たとえば特定の大音符だけを強調したい場合、対象の大音符に効果を付け、その後のノーツで元の流れに戻しやすくするための補助が入ります。</p>
+      </article>
+
+      <article class="block">
+        <h3>11. 実行ボタン</h3>
+        <p><strong>実行</strong> を押すと、現在の入力値と処理対象をもとに .osu ファイルを上書きします。実行前にバックアップが作成され、成功するとメッセージが表示されます。最後に osu! 側で <kbd>Ctrl</kbd> + <kbd>L</kbd> を押して再読み込みしてください。</p>
+      </article>
+    </section>
+
+    <section class="tab-panel" id="utility-panel">
+      <div class="panel-header">
+        <p class="eyebrow">Utility</p>
+        <h2>一括処理と補助機能</h2>
+        <p>Utilityは、SV以外の譜面編集をまとめて行う場所です。ここではGUIの上から順に、表示名と同じ日本語の機能名で説明します。</p>
+      </div>
+
+      <div class="definition-list tall">
+        <div><strong>オフセット変更 (all diffs)</strong><span>同じ曲フォルダ内の全 .osu ファイルを対象に、指定ミリ秒分タイミングを移動します。PreviewTime、Bookmarks、TimingPoints、HitObjects、スピナー終点、動画イベントの開始時刻が移動対象です。背景画像イベントの表示位置はこの機能では変更しません。</span></div>
+        <div><strong>ヒットサウンド設定</strong><span>現在の難易度を対象に、Kat を Clap または Whistle へ統一する機能です。Don 系のノーツは基本的に変更せず、Kat と大音符 Kat に選択したヒットサウンドを反映します。</span></div>
+        <div><strong>ノーツ座標設定</strong><span>現在の難易度のノーツ座標を書き換えます。Center は X=256 / Y=192 の中央寄せです。Separate は Don、Kat、大音符 Don、大音符 Kat ごとに設定画面の座標を使います。初期値はすべて X=256 / Y=192 です。Random はノーツごとにランダムな座標を設定します。スライダーは制御点も移動します。</span></div>
+        <div><strong>タグエディタ (all diffs)</strong><span>タグ入力欄の内容を、同じ曲フォルダ内の全難易度の Metadata に反映します。全難易度で一括でタグを変更したい時に使います。</span></div>
+        <div><strong>設定コピー (all diffs)</strong><span>現在の難易度から全難易度へ設定をコピーします。Metadata、BG Position、Preview、Timing Points を選べます。Timing Points は赤線をコピーし、既存の緑線は各難易度のものを残して出力します。</span></div>
+        <div><strong>再スナップ</strong><span>現在の難易度を対象に、指定範囲内のノーツを選択したビートスナップ間隔へ移動します。全ノーツ対象の場合は、最初のノーツから最後のノーツまでを範囲として扱います。</span></div>
+      </div>
+
+      <article class="block">
+        <h3>再スナップの詳しい挙動</h3>
+        <p>赤線ごとに BPM、拍子、barLength からスナップ間隔を計算します。各スナップ位置の前後半分の範囲に入っているノーツを、そのスナップ位置へ移動します。範囲内に赤線がある場合、次の赤線以降は新しい BPM と拍子で再計算します。</p>
+        <p>選べる間隔は <code>1/24</code>、<code>1/36</code>、<code>1/48</code>、<code>1/60</code> です。譜面の意図に合う最小単位を選んでください。実行前に確認ダイアログが表示されます。</p>
+      </article>
+    </section>
+
+    <section class="tab-panel" id="bg-panel">
+      <div class="panel-header">
+        <p class="eyebrow">BG Setter</p>
+        <h2>背景Y位置の調整</h2>
+        <p>現在の譜面背景を表示し、osu! の背景イベント行に保存されているY位置を調整します。</p>
+      </div>
+
+      <article class="block">
+        <h3>何を変更するか</h3>
+        <p>Eventsセクションの背景行にあるYオフセットを書き換えます。画像ファイルそのものを編集する機能ではありません。背景の表示位置だけを変えたいときに使います。</p>
+      </article>
+
+      <article class="block">
+        <h3>操作</h3>
+        <ol class="compact-steps">
+          <li>osu! エディタで対象譜面を開きます。</li>
+          <li>メニューから <strong>BG Setter</strong> を開きます。</li>
+          <li>背景を上下にドラッグしてY位置を調整します。</li>
+          <li><strong>実行</strong>、または <kbd>Ctrl</kbd> + <kbd>S</kbd> で保存します。</li>
+          <li>osu! 側で <kbd>Ctrl</kbd> + <kbd>L</kbd> を押して確認します。</li>
+        </ol>
+      </article>
+    </section>
+
+    <section class="tab-panel" id="timing-property-panel">
+      <div class="panel-header">
+        <p class="eyebrow">Timing Property</p>
+        <h2>現在位置の譜面情報を確認する</h2>
+        <p>Timing Propertyは、編集対象を書き換える画面ではなく、osu! の現在再生位置に対応する値を確認するための補助画面です。設定のアドバンスモードを有効にしている場合にメニューへ表示されます。</p>
+      </div>
+
+      <div class="definition-list tall">
+        <div><strong>Timing</strong><span>osu! の現在再生位置を <code>mm:ss:fff</code> 形式で表示します。SV Editorの始点・終点を決めるときの目安になります。</span></div>
+        <div><strong>BPM</strong><span>現在位置に適用されている赤線のBPMを表示します。範囲内でBPMが変わる譜面では、現在位置に応じて表示が変わります。</span></div>
+        <div><strong>SV</strong><span>現在位置に適用されている SV を表示します。直前の緑線をもとにした値なので、SV Editor で調整した結果の確認に使えます。</span></div>
+        <div><strong>Volume</strong><span>現在位置に適用されている Volume を表示します。緑線や赤線の音量設定を確認したいときに使います。</span></div>
+        <div><strong>見た目 BPM</strong><span>BPM、SV、SliderMultiplier をもとに、見た目上のスクロール速度を BPM 相当で表示します。SV の体感速度を比較したいときに便利です。</span></div>
+      </div>
+
+      <article class="block">
+        <h3>使い方</h3>
+        <p>osu! エディタで曲を再生またはシークすると、Timing Property の値も更新されます。SV Editor で複雑なカーブを作る前に、現在の BPM や SV を確認しておくと、入力する SV 値を決めやすくなります。</p>
+      </article>
+    </section>
+
+    <section class="tab-panel" id="settings-panel">
+      <div class="panel-header">
+        <p class="eyebrow">Settings</p>
+        <h2>設定項目</h2>
+        <p>ツール全体の表示、バックアップ保持数、オフセット方式、ノーツ座標を管理します。</p>
+      </div>
+
+      <div class="definition-list tall">
+        <div><strong>言語設定</strong><span>English / 日本語を切り替えます。UIラベルとダイアログ文言の表示に使われます。</span></div>
+        <div><strong>バックアップ保持上限</strong><span>譜面ごとに保持するバックアップ数です。1から100の整数を指定します。保存時に古いバックアップが整理されます。</span></div>
+        <div><strong>オフセットタイプ</strong><span>SV Editor のオフセット入力を、スナップ基準またはミリ秒基準に切り替えます。</span></div>
+        <div><strong>ノーツ配置設定</strong><span>Separate 使用時の Don、Kat、大音符 Don、大音符 Kat の X / Y 座標を設定します。X は 0 から 512、Y は 0 から 384 の範囲です。</span></div>
+        <div><strong>Unicode対応</strong><span>譜面名表示にTitleUnicode / ArtistUnicodeを使います。日本語や特殊文字の曲名を見やすくしたい場合に有効です。</span></div>
+        <div><strong>アドバンスモード</strong><span>相対速度変化や Timing Property など、追加の編集項目を表示します。SV の基準値を使った変化を扱う場合に有効にします。</span></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="safety-panel">
+      <div class="panel-header">
+        <p class="eyebrow">Safety</p>
+        <h2>バックアップと注意事項</h2>
+        <p>このツールは便利ですが、実行時に .osu ファイルを書き換えます。処理の前後で何が起きるかを理解しておくと安心です。</p>
+      </div>
+
+      <div class="content-columns">
+        <article class="block warning">
+          <h3>自動バックアップ</h3>
+          <p>SV Editor、Utilityの一部、BG Setter は、上書き前にBackupフォルダへ現在の .osu ファイルをコピーします。バックアップファイル名には日時が使われ、設定した保持上限を超えた古いファイルは削除されます。</p>
+        </article>
+        <article class="block warning">
+          <h3>手動バックアップ推奨</h3>
+          <p>大きな範囲へのSV適用、全難易度へのコピー、Resnapなどは影響範囲が広い処理です。公開前の譜面や作業中のセットでは、曲フォルダごと別の場所へコピーしてから試すと安全です。</p>
+        </article>
+      </div>
+
+      <article class="block">
+        <h3>実行後の確認</h3>
+        <p>成功メッセージは「ファイルへの書き出しが終わった」ことを示します。osu! エディタの表示は自動では更新されません。必ず <kbd>Ctrl</kbd> + <kbd>L</kbd> で再読み込みし、Timing、HitObjects、背景位置を確認してください。</p>
+      </article>
+    </section>
+
+    <section class="tab-panel" id="trouble-panel">
+      <div class="panel-header">
+        <p class="eyebrow">Troubleshooting</p>
+        <h2>困ったとき</h2>
+        <p>よくある症状と確認する場所です。</p>
+      </div>
+
+      <div class="faq-list">
+        <details open>
+          <summary>譜面名や背景が表示されない</summary>
+          <p>osu! が起動しているか、エディタで譜面を開いているか確認してください。曲フォルダや .osu ファイルが移動・削除されている場合も取得に失敗します。</p>
+        </details>
+        <details>
+          <summary>実行後に変化が見えない</summary>
+          <p>osu! 側で <kbd>Ctrl</kbd> + <kbd>L</kbd> を押して譜面を再読み込みしてください。ツールがファイルを書き換えても、エディタ表示は自動更新されません。</p>
+        </details>
+        <details>
+          <summary>Timing の入力でエラーになる</summary>
+          <p><code>mm:ss:fff</code> 形式、またはミリ秒の整数で入力してください。始点が終点より後ろの場合もエラーになります。</p>
+        </details>
+        <details>
+          <summary>SVやVolumeの値でエラーになる</summary>
+          <p>SV は正の数、Volume は 5 から 100 の整数が基本です。相対速度変化の基準 SV も正の値を指定してください。</p>
+        </details>
+        <details>
+          <summary>バックアップを減らしたい</summary>
+          <p>設定画面のバックアップ保持上限を変更して保存します。1から100の範囲で指定でき、保存後に古いバックアップが整理されます。</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>osu!taiko Mapping Helper 使用説明書</span>
+    <a href="https://github.com/miyagish1m4/osutaiko-mapping-helper">GitHub repository</a>
+  </footer>
+</body>
+</html>
