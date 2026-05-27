@@ -252,12 +252,13 @@ dotnet build -c Release</code></pre>
       <article class="block">
         <h3>Objects のみ の詳細</h3>
         <div class="manual-table">
-          <div><strong>すべての HitObject</strong><span>範囲内の HitObject と小節線を対象にします。<br>通常ノーツ、スライダー、スピナーなど、譜面上のオブジェクトに沿って緑線を置きます。<br>
-            BookMark だけの地点は含まれませんが、BookMark と同じタイミングに実ノーツがある場合は、その実ノーツとして対象になります。</span></div>
-          <div><strong>小節線上のみ</strong><span>小節線と同じタイミングにある HitObject だけを対象にします。小節頭のノーツだけに効果を付けたい場合に使います。</span></div>
-          <div><strong>小節線上以外</strong><span>小節線と同じタイミングではない HitObject を対象にします。小節頭を避けてノーツ側だけを処理したい場合に使います。</span></div>
-          <div><strong>BookMark のみ</strong><span>BookMark と同じタイミングにある地点だけを対象にします。BookMark 位置にノーツがある場合は、そのノーツ位置として扱われます。</span></div>
-          <div><strong>BookMark 以外</strong><span>BookMark が付いていない HitObject を対象にします。目印を付けた場所だけを避けたい場合に使います。</span></div>
+          <div><strong>すべての Object</strong><span>範囲内の HitObject と小節線・BookMark を対象にします。<br>全ての Object（ノーツ、スライダー、スピナー、小節線、BookMark）に沿って緑線を置きます。<br></span></div>
+          <div><strong>小節線のみ</strong><span>小節線を対象にします。ノーツがない小節線、ノーツがある小節線、両方を対象とし緑線を置きます。<br>
+            それぞれの小節線の次の Object にも戻し用の緑線を自動で置いて SV が意図せず次の区間へ残り続けないようにします。</span></div>
+          <div><strong>小節線以外</strong><span>小節線と同じタイミングではない Object を対象にします。小節線にも戻し用の緑線を自動で置いて SV が意図せず小節線にかからないようにします。</span></div>
+          <div><strong>BookMark のみ</strong><span>BookMark と同じタイミングにある地点だけを対象にします。ノーツがない BookMark、ノーツがある BookMark、両方を対象とし緑線を置きます。<br>
+            それぞれの BookMark の次の Object にも戻し用の緑線を自動で置いて SV が意図せず次の区間へ残り続けないようにします。</span></div>
+          <div><strong>BookMark 以外</strong><span>BookMark が付いていない Object を対象にします。BookMark にも戻し用の緑線を自動で置いて SV が意図せず BookMark にかからないようにします。<br>目印を付けた場所だけを避けたい場合に使います。</span></div>
           <div><strong>特定のオブジェクトのみ</strong><span>通常 Don、通常 Kat、大音符 Don、大音符 Kat、Slider、Spinner を個別に選び、選択した種類に一致するオブジェクトだけを処理します。</span></div>
         </div>
       </article>
@@ -265,8 +266,7 @@ dotnet build -c Release</code></pre>
       <article class="block">
         <h3>特定のオブジェクトのみ</h3>
         <p>選択していない種類のオブジェクトに対応する既存緑線は、基本的に触りません。</p>
-        <p>このモードでは、選んだオブジェクトの直前または同時刻に緑線を置き、次のノーツ側にも必要な線を自動で置いて SV が意図せず次の区間へ残り続けないようにします。<br>
-          たとえば特定の大音符だけを強調したい場合、対象の大音符に効果を付け、その後のノーツで元の流れに戻しやすくするための補助が入ります。</p>
+        <p>このモードでは、選んだオブジェクトの直前または同時刻に緑線を置き、次のノーツ側にも戻し用の緑線を自動で置いて SV が意図せず次の区間へ残り続けないようにします。<br></p>
       </article>
 
       <article class="block">
