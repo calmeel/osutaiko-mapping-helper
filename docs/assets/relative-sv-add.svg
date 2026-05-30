@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-labelledby="title desc">
+  <title id="title">相対速度変化の加算イメージ</title>
+  <desc id="desc">処理前の SV に指定した差を足し、変化後の SV が同じ分だけ上へ移動する様子。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#24c467"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: "Yu Gothic UI", "Meiryo", sans-serif; fill: #d8e3f2; font-size: 17px; }
+    .caption { font-size: 15px; fill: #93a8bf; }
+    .formula { font-size: 18px; font-weight: 700; fill: #f8fbff; }
+    .axis { stroke: #53667f; stroke-width: 2; }
+    .before { stroke: #ff4d57; stroke-width: 4; fill: none; stroke-linecap: round; }
+    .after { stroke: #24c467; stroke-width: 4; fill: none; stroke-linecap: round; }
+    .delta { stroke: #24c467; stroke-width: 3.2; marker-end: url(#arrow); }
+    .label-before { fill: #ff6b73; font-weight: 700; }
+    .label-after { fill: #39d47d; font-weight: 700; }
+    .label-delta { fill: #24c467; font-weight: 700; }
+  </style>
+  <rect width="720" height="360" rx="10" fill="#0b1017"/>
+  <rect x="20" y="18" width="680" height="324" rx="8" fill="#101823" stroke="#28374a"/>
+  <text class="formula" x="42" y="52">加算: 変化後 SV = 処理前 SV + 入力 SV</text>
+  <line class="axis" x1="48" y1="276" x2="675" y2="276"/>
+  <line class="axis" x1="48" y1="296" x2="48" y2="82"/>
+  <text class="caption" x="640" y="304">Timing</text>
+  <text class="caption" x="24" y="94">SV</text>
+  <path class="before" d="M70 246 L190 262 L250 186 L370 210 L435 145 L650 172"/>
+  <path class="after" d="M70 178 L190 194 L250 118 L370 142 L435 77 L650 104"/>
+  <line class="delta" x1="250" y1="186" x2="250" y2="126"/>
+  <line class="delta" x1="435" y1="145" x2="435" y2="85"/>
+  <text class="label-delta" x="262" y="157">+ 0.4</text>
+  <text class="label-delta" x="447" y="116">+ 0.4</text>
+  <text class="label-before" x="505" y="200">変化前の SV</text>
+  <text class="label-after" x="505" y="75">変化後の SV</text>
+</svg>

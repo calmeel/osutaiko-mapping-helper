@@ -339,16 +339,11 @@ details,
   background: #0b1017;
 }
 
-.sv-graph svg {
+.sv-graph img {
   display: block;
   width: 100%;
   height: auto;
   min-height: 130px;
-}
-
-.sv-graph text {
-  fill: var(--muted);
-  font-size: 14px;
 }
 
 .sv-graph figcaption {
@@ -357,40 +352,12 @@ details,
   font-size: 0.92rem;
 }
 
-.sv-graph .axis {
-  stroke: var(--line-strong);
-  stroke-width: 2;
+.relative-graph-pair {
+  max-width: 1120px;
 }
 
-.sv-graph .linear-line {
-  fill: none;
-  stroke: var(--brand);
-  stroke-width: 3;
-}
-
-.sv-graph .geometric-line {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 3;
-  stroke-dasharray: 7 6;
-}
-
-.sv-graph .point {
-  fill: var(--ink);
-  stroke: var(--brand);
-  stroke-width: 2;
-}
-
-.sv-graph .legend {
-  font-weight: 700;
-}
-
-.sv-graph .legend.linear {
-  fill: var(--brand);
-}
-
-.sv-graph .legend.geometric {
-  fill: var(--accent);
+.relative-graph {
+  max-width: 560px;
 }
 
 .definition-list {

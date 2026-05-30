@@ -149,37 +149,11 @@ dotnet build -c Release</code></pre>
         <p class="small-note"><code>p</code> は範囲内の進行率です。始点では <code>0</code>、終点では <code>1</code> になります。</p>
         <div class="sv-graph-pair">
           <figure class="sv-graph" aria-label="終点の SV が始点より高い場合の変化イメージ">
-            <svg viewBox="0 0 360 150" role="img" aria-labelledby="sv-graph-up-title sv-graph-up-desc">
-              <title id="sv-graph-up-title">上昇する SV 変化</title>
-              <desc id="sv-graph-up-desc">横軸が Timing、縦軸が SV。等差は上昇する直線、等比は上昇する曲線として描かれている。</desc>
-              <line class="axis" x1="36" y1="118" x2="330" y2="118"></line>
-              <line class="axis" x1="36" y1="118" x2="36" y2="22"></line>
-              <text x="300" y="140">Timing</text>
-              <text x="8" y="30">SV</text>
-              <line class="linear-line" x1="48" y1="108" x2="310" y2="26"></line>
-              <path class="geometric-line" d="M48 108 C112 104, 184 86, 238 58 C272 40, 292 30, 310 26"></path>
-              <circle class="point" cx="48" cy="108" r="3"></circle>
-              <circle class="point" cx="310" cy="26" r="3"></circle>
-              <text class="legend linear" x="62" y="54">等差</text>
-              <text class="legend geometric" x="222" y="96">等比</text>
-            </svg>
+            <img src="assets/sv-change-up.svg" alt="終点の SV が始点より高い場合の等差と等比の変化イメージ">
             <figcaption>終点の SV が高い場合</figcaption>
           </figure>
           <figure class="sv-graph" aria-label="終点の SV が始点より低い場合の変化イメージ">
-            <svg viewBox="0 0 360 150" role="img" aria-labelledby="sv-graph-down-title sv-graph-down-desc">
-              <title id="sv-graph-down-title">下降する SV 変化</title>
-              <desc id="sv-graph-down-desc">横軸が Timing、縦軸が SV。等差は下降する直線、等比は下降する曲線として描かれている。</desc>
-              <line class="axis" x1="36" y1="118" x2="330" y2="118"></line>
-              <line class="axis" x1="36" y1="118" x2="36" y2="22"></line>
-              <text x="300" y="140">Timing</text>
-              <text x="8" y="30">SV</text>
-              <line class="linear-line" x1="48" y1="26" x2="310" y2="108"></line>
-              <path class="geometric-line" d="M48 26 C108 56, 170 82, 238 96 C270 103, 294 106, 310 108"></path>
-              <circle class="point" cx="48" cy="26" r="3"></circle>
-              <circle class="point" cx="310" cy="108" r="3"></circle>
-              <text class="legend linear" x="216" y="70">等差</text>
-              <text class="legend geometric" x="142" y="102">等比</text>
-            </svg>
+            <img src="assets/sv-change-down.svg" alt="終点の SV が始点より低い場合の等差と等比の変化イメージ">
             <figcaption>終点の SV が低い場合</figcaption>
           </figure>
         </div>
@@ -207,9 +181,24 @@ dotnet build -c Release</code></pre>
         <h3>6. 相対速度変化</h3>
         <p>設定のアドバンスモードを有効にすると表示されます。通常は入力した SV をそのまま使いますが、相対速度変化では処理前の SV を参照して、新しい SV を計算します。<br>
         <strong>乗算</strong> は <code>(現在の SV - 基準 SV) * 入力 SV + 基準 SV</code> の形で変化します。<strong>加算</strong> は現在の SV に入力 SV を足します。</p>
-        <p>基本的には <strong>特定のオブジェクトのみ</strong> と組み合わせて使う機能で、大音符のみに SV を与えたい場合などに有効です。</p>
         <p><strong>終点の有効化</strong> を併用すると、相対変化の始点値と終点値を別々に指定できます。終点の有効化を外した場合は、始点側の値を基準にした一定の相対変化として扱う使い方になります。</p>
-        <p>相対速度変化は、既に置かれている SV の流れを完全に上書きするよりも、「今の SV に対して一部のオブジェクトだけ強調を足す」場面に向いています。全体の SV カーブを新しく作る場合は、通常の SV 指定の方が分かりやすいです。</p>
+        <div class="sv-graph-pair relative-graph-pair">
+          <figure class="sv-graph relative-graph" aria-label="相対速度変化の加算イメージ">
+            <img src="assets/relative-sv-add.svg" alt="処理前の SV に入力 SV を足して変化後の SV を作る加算のイメージ">
+          </figure>
+          <figure class="sv-graph relative-graph" aria-label="相対速度変化の乗算イメージ">
+            <img src="assets/relative-sv-multiply.svg" alt="基準 SV からの差分を倍率で変化させる乗算のイメージ">
+          </figure>
+        </div>
+        <p>終点の有効化を使うと、入力する相対変化量も始点から終点に向かって変化します。</p>
+        <div class="sv-graph-pair relative-graph-pair">
+          <figure class="sv-graph relative-graph" aria-label="終点の有効化を使った相対速度変化の加算イメージ">
+            <img src="assets/relative-sv-add-end.svg" alt="加算値が始点の -0.0 から終点の -1.0 へ変化するイメージ">
+          </figure>
+          <figure class="sv-graph relative-graph" aria-label="終点の有効化を使った相対速度変化の乗算イメージ">
+            <img src="assets/relative-sv-multiply-end.svg" alt="乗算値が始点の 1.0 から終点の 1.5 へ変化するイメージ">
+          </figure>
+        </div>
       </article>
 
       <div class="content-columns">
@@ -218,7 +207,7 @@ dotnet build -c Release</code></pre>
           <p>指定範囲内の対象タイミングに緑線を追加します。<br>SV や Volume を有効にしている場合は、始点から終点までの位置に応じて値を計算します。</p>
           <p>既存の緑線と重なる場合は、処理対象やオフセットに応じて既存緑線を整理しながら出力します。</p>
           <p>整理の内容として、対象ノーツの直前から対象ノーツまでの間にある既存緑線は、今回置く線と効果が重複しないよう削除対象になることがあります。ただし、選択していないオブジェクトの効果を戻すために必要な線や、kiai の切り替わりを維持するために必要な線は残す・値を引き継ぐように扱われます。</p>
-          <p>適応後は、範囲内や範囲後のスライダーの見た目が崩れにくいよう、必要に応じてsliderLengthを補正します。</p>
+          <p>適用後は、範囲内や範囲後のスライダーの見た目が崩れにくいよう、必要に応じてsliderLengthを補正します。</p>
         </article>
         <article class="block">
           <h3>8. 削除タブ</h3>
@@ -238,7 +227,7 @@ dotnet build -c Release</code></pre>
         <p>チェックすると、Objects のみで緑線を置くときに、対象ノーツの少し前へ緑線をずらします。</p>
         <p>設定画面のオフセットタイプが <strong>1/16 (1/12) offset</strong> の場合は、BPM から 1/16 分の時間を計算して前に置きます。<strong>ms offset</strong> の場合は、指定したミリ秒分前に置きます。</p>
         <p><strong>1/12 を含める</strong> を有効にすると、1/12 snap の HitObject が含まれる場合に、前の HitObject の方へ SV 線が近づきすぎないように 1/12 分のオフセットを使います。それ以外の配置では 1/16 が使われます。</p>
-        <p>Volume 変化を伴う SV 線を設置する場合は、プレイヤーが早入りして叩くことにより Volume 変化が適応されなくなる場合を防ぐためにこの機能を使うことを推奨します。</p>
+        <p>Volume 変化を伴う SV 線を設置する場合は、プレイヤーが早入りして叩くことにより Volume 変化が適用されなくなる場合を防ぐためにこの機能を使うことを推奨します。</p>
       </article>
 
       <article class="block">
