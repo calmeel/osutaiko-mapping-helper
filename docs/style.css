@@ -53,6 +53,57 @@ kbd {
   color: #d8fff9;
 }
 
+strong {
+  color: var(--ink);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.45rem;
+  margin-right: 0.38rem;
+  padding: 0.05rem 0.45rem;
+  border: 1px solid rgba(61, 214, 198, 0.45);
+  border-radius: 999px;
+  color: #bffdf6;
+  background: rgba(61, 214, 198, 0.12);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.25;
+  vertical-align: 0.08rem;
+}
+
+.tag.warn {
+  border-color: rgba(246, 179, 109, 0.5);
+  color: #ffd7aa;
+  background: rgba(246, 179, 109, 0.13);
+}
+
+.tag.danger {
+  border-color: rgba(255, 143, 143, 0.52);
+  color: #ffc9c9;
+  background: rgba(255, 143, 143, 0.12);
+}
+
+.tag.neutral {
+  border-color: var(--line-strong);
+  color: #d6e3f4;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.marker {
+  color: var(--brand);
+  font-weight: 700;
+}
+
+.marker.warn {
+  color: var(--accent);
+}
+
+.marker.danger {
+  color: var(--danger);
+}
+
 pre {
   margin: 0.7rem 0 0;
   overflow-x: auto;

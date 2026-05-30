@@ -46,7 +46,7 @@
       <div class="panel-header">
         <p class="eyebrow">Overview</p>
         <h2>このツールの役割</h2>
-        <p>osu! のエディタで開いている taiko 譜面を読み取り、SV 編集や一括編集を補助します。操作対象は現在 osu! 側で選択されている .osu ファイル、または同じ曲フォルダ内の全難易度です。</p>
+        <p>osu! のエディタで開いている taiko 譜面を読み取り、<strong>SV 編集</strong>や<strong>一括編集</strong>を補助します。操作対象は現在 osu! 側で選択されている <code>.osu</code> ファイル、または同じ曲フォルダ内の全難易度です。</p>
       </div>
 
       <div class="dense-grid">
@@ -56,7 +56,7 @@
         </article>
         <article>
           <h3>.osu を直接編集する</h3>
-          <p>SV Editor、Utility、BG Setter は .osu ファイルを書き換えます。処理後は osu! のエディタで <kbd>Ctrl</kbd> + <kbd>L</kbd> を押して、ファイルを再読み込みしてください。</p>
+          <p><strong>SV Editor</strong>、<strong>Utility</strong>、<strong>BG Setter</strong> は <code>.osu</code> ファイルを書き換えます。処理後は osu! のエディタで <kbd>Ctrl</kbd> + <kbd>L</kbd> を押して、ファイルを再読み込みしてください。</p>
         </article>
         <article>
           <h3>主な機能</h3>
@@ -70,7 +70,7 @@
 
       <div class="callout">
         <h3>まず覚えること</h3>
-        <p>このツールの基本は「osu! で対象譜面を開く」「ツールで条件を入力する」「実行する」「osu! で <kbd>Ctrl</kbd> + <kbd>L</kbd> を押す」です。成功メッセージだけでは osu! 側の表示は更新されないため、再読み込みまでを1セットにしてください。</p>
+        <p>このツールの基本は「<strong>osu! で対象譜面を開く</strong>」「<strong>ツールで条件を入力する</strong>」「<strong>実行する</strong>」「osu! で <kbd>Ctrl</kbd> + <kbd>L</kbd> を押す」です。成功メッセージだけでは osu! 側の表示は更新されないため、<span class="marker warn">再読み込みまでを1セット</span>にしてください。</p>
       </div>
     </section>
 
@@ -114,7 +114,7 @@ dotnet build -c Release</code></pre>
 
       <article class="block">
         <h3>操作の前提</h3>
-        <p>Timing、SV、Volume などの入力欄は各機能タブで説明します。まずは、ツールが現在の譜面を認識していることと、実行後に osu! 側で再読み込みすることだけ覚えておけば大丈夫です。</p>
+        <p><strong>Timing</strong>、<strong>SV</strong>、<strong>Volume</strong> などの入力欄は各機能タブで説明します。まずは、ツールが現在の譜面を認識していることと、実行後に osu! 側で再読み込みすることだけ覚えておけば大丈夫です。</p>
       </article>
     </section>
 
@@ -127,14 +127,14 @@ dotnet build -c Release</code></pre>
 
       <article class="block">
         <h3>1. Timing</h3>
-        <p>処理する範囲の始点と終点を指定します。入力は <code>mm:ss:fff</code> 形式、またはミリ秒の整数に対応しています。たとえば <code>01:23:456</code> と <code>83456</code> はどちらも受け付けます。</p>
+        <p>処理する範囲の<strong>始点</strong>と<strong>終点</strong>を指定します。入力は <code>mm:ss:fff</code> 形式、またはミリ秒の整数に対応しています。たとえば <code>01:23:456</code> と <code>83456</code> はどちらも受け付けます。</p>
         <p><strong>Set Start Timing</strong> と <strong>Set End Timing</strong> は、osu! の現在の再生位置をそれぞれ始点・終点に入れるボタンです。</p>
-        <p><strong>⇔</strong> ボタンは始点と終点を入れ替えます。始点が終点より後ろにある状態では実行時にエラーになります。</p>
+        <p><strong>⇔</strong> ボタンは始点と終点を入れ替えます。<span class="marker danger">始点が終点より後ろ</span>にある状態では実行時にエラーになります。</p>
       </article>
 
       <article class="block">
         <h3>2. SV</h3>
-        <p>SV チェックを有効にすると、追加または更新する緑線の SV を指定できます。<br>SV は 0 より大きい数値を入力します。小数も使用できます。<br>SV チェックを外した場合は、処理地点の直前にある緑線の SV を参照して、SV 値を明示的には変更しません。</p>
+        <p>SV チェックを有効にすると、追加または更新する緑線の SV を指定できます。<br><strong>SV は 0 より大きい数値</strong>を入力します。小数も使用できます。<br>SV チェックを外した場合は、処理地点の直前にある緑線の SV を参照して、SV 値を明示的には変更しません。</p>
         <p><strong>等差モード</strong> は始点から終点まで一定量ずつ変化します。<strong>等比モード</strong> は比率で変化します。</p>
         <div class="formula-grid" aria-label="SV 計算式">
           <div>
@@ -162,8 +162,8 @@ dotnet build -c Release</code></pre>
 
       <article class="block">
         <h3>3. Volume</h3>
-        <p>Volume チェックを有効にすると、緑線の音量を指定できます。Volume は 5 から 100 の整数で入力します。小数は受け付けません。<br>
-          Volume チェックを外した場合は、処理地点の直前にある TimingPoint の Volume を参照します。音量を変えずに SV だけを編集したい場合は、Volume を無効にして下さい。</p>
+        <p>Volume チェックを有効にすると、緑線の音量を指定できます。<strong>Volume は 5 から 100 の整数</strong>で入力します。小数は受け付けません。<br>
+          Volume チェックを外した場合は、処理地点の直前にある赤線 or 緑線 の Volume を参照します。音量を変えずに SV だけを編集したい場合は、<span class="marker">Volume を無効</span>にして下さい。</p>
       </article>
 
       <div class="content-columns">
@@ -179,7 +179,7 @@ dotnet build -c Release</code></pre>
 
       <article class="block">
         <h3>6. 相対速度変化</h3>
-        <p>設定のアドバンスモードを有効にすると表示されます。通常は入力した SV をそのまま使いますが、相対速度変化では処理前の SV を参照して、新しい SV を計算します。<br>
+        <p>設定のアドバンスモードを有効にすると表示されます。通常は入力した SV をそのまま使いますが、相対速度変化では<strong>処理前の SV を参照</strong>して、新しい SV を計算します。<br>
         <strong>乗算</strong> は <code>(現在の SV - 基準 SV) * 入力 SV + 基準 SV</code> の形で変化します。<strong>加算</strong> は現在の SV に入力 SV を足します。</p>
         <p><strong>終点の有効化</strong> を併用すると、相対変化の始点値と終点値を別々に指定できます。終点の有効化を外した場合は、始点側の値を基準にした一定の相対変化として扱う使い方になります。</p>
         <div class="sv-graph-pair relative-graph-pair">
@@ -206,24 +206,19 @@ dotnet build -c Release</code></pre>
           <h3>7. 適用タブ</h3>
           <p>指定範囲内の対象タイミングに緑線を追加します。<br>SV や Volume を有効にしている場合は、始点から終点までの位置に応じて値を計算します。</p>
           <p>既存の緑線と重なる場合は、処理対象やオフセットに応じて既存緑線を整理しながら出力します。</p>
-          <p>整理の内容として、対象ノーツの直前から対象ノーツまでの間にある既存緑線は、今回置く線と効果が重複しないよう削除対象になることがあります。ただし、選択していないオブジェクトの効果を戻すために必要な線や、kiai の切り替わりを維持するために必要な線は残す・値を引き継ぐように扱われます。</p>
-          <p>適用後は、範囲内や範囲後のスライダーの見た目が崩れにくいよう、必要に応じてsliderLengthを補正します。</p>
+          <p>整理の内容として、対象ノーツの直前から対象ノーツまでの間にある既存緑線は、今回置く線と効果が重複しないよう削除対象になることがあります。ただし、<span class="marker warn">選択していないオブジェクトの効果を戻すために必要な線</span>や、kiai の切り替わりを維持するために必要な線は残す・値を引き継ぐように扱われます。</p>
+          <p>適用後は、範囲内や範囲後のスライダーの見た目が崩れにくいよう、必要に応じて <code>sliderLength</code> を補正します。</p>
+          <p>kiai 状態は、直前の赤線 or 緑線を引き継ぎます。</p>
         </article>
         <article class="block">
           <h3>8. 削除タブ</h3>
           <p>指定範囲内の緑線を削除します。赤線は削除しません。</p>
-          <p>削除後は、範囲内や範囲後のスライダーの見た目が崩れにくいよう、必要に応じてsliderLengthを補正します。</p>
+          <p>削除後は、範囲内や範囲後のスライダーの見た目が崩れにくいよう、必要に応じて <code>sliderLength</code> を補正します。</p>
         </article>
       </div>
 
       <article class="block">
-        <h3>9. kiai</h3>
-        <p>チェックを有効にすると、追加する緑線の kiai フラグを ON にします。チェックを外している場合は、基本的に直前の TimingPoint の kiai 状態を引き継ぎます。</p>
-        <p>そのため、既存の kiai 区間を維持したいだけなら、このチェックボックスを ON にしなくても大丈夫です。</p>
-      </article>
-
-      <article class="block">
-        <h3>10. オフセット</h3>
+        <h3>9. オフセット</h3>
         <p>チェックすると、Objects のみで緑線を置くときに、対象ノーツの少し前へ緑線をずらします。</p>
         <p>設定画面のオフセットタイプが <strong>1/16 (1/12) offset</strong> の場合は、BPM から 1/16 分の時間を計算して前に置きます。<strong>ms offset</strong> の場合は、指定したミリ秒分前に置きます。</p>
         <p><strong>1/12 を含める</strong> を有効にすると、1/12 snap の HitObject が含まれる場合に、前の HitObject の方へ SV 線が近づきすぎないように 1/12 分のオフセットを使います。それ以外の配置では 1/16 が使われます。</p>
@@ -231,7 +226,7 @@ dotnet build -c Release</code></pre>
       </article>
 
       <article class="block">
-        <h3>11. 処理対象の選び方</h3>
+        <h3>10. 処理対象の選び方</h3>
         <div class="definition-list">
           <div><strong>Objects のみ</strong><span>HitObject、小節線、BookMark、特定オブジェクトを基準に緑線を追加します。基本モードです。</span></div>
           <div><strong>BeatSnaps</strong><span>赤線の BPM からビートスナップ間隔を計算し、指定範囲内に一定間隔で緑線を追加します。<br>
@@ -257,8 +252,8 @@ dotnet build -c Release</code></pre>
       </article>
 
       <article class="block">
-        <h3>12. 実行ボタン</h3>
-        <p><strong>実行</strong> を押すと、現在の入力値と処理対象をもとに .osu ファイルを上書きします。<br>
+        <h3>11. 実行ボタン</h3>
+        <p><strong>実行</strong> を押すと、現在の入力値と処理対象をもとに <code>.osu</code> ファイルを上書きします。<br>
           実行前にバックアップが作成され、成功するとメッセージが表示されます。最後に osu! 側で <kbd>Ctrl</kbd> + <kbd>L</kbd> を押して再読み込みしてください。</p>
       </article>
     </section>
@@ -267,7 +262,7 @@ dotnet build -c Release</code></pre>
       <div class="panel-header">
         <p class="eyebrow">Utility</p>
         <h2>一括処理と補助機能</h2>
-        <p>Utilityは、SV以外の譜面編集をまとめて行う場所です。</p>
+        <p>Utility は、SV 以外の譜面編集をまとめて行う場所です。</p>
       </div>
 
       <div class="definition-list tall">
@@ -276,8 +271,9 @@ dotnet build -c Release</code></pre>
         <div><strong>ヒットサウンド設定</strong><span>現在の難易度を対象に、Kat を Clap または Whistle へ統一する機能です。<br>
           Don 系のノーツは基本的に変更せず、Kat と大音符 Kat に選択したヒットサウンドを反映します。</span></div>
         <div><strong>ノーツ座標設定</strong><span>現在の難易度のノーツ座標を書き換えます。<br>
-          Center は X=256 / Y=192 の中央寄せです。Separate は Don、Kat、大音符 Don、大音符 Kat ごとに設定画面の座標を使います。<br>
-          初期値はすべて X=256 / Y=192 です。Random はノーツごとにランダムな座標を設定します。スライダーは制御点も移動します。</span></div>
+          Center は X=256 / Y=192 の中央寄せです。<br>
+          Separate は Don、Kat、大音符 Don、大音符 Kat ごとに設定画面の座標を使います。<br>
+          Random はノーツごとにランダムな座標を設定します。スライダーは制御点も移動します。</span></div>
         <div><strong>タグエディタ (all diffs)</strong><span>タグ入力欄の内容を、同じ曲フォルダ内の全難易度の Metadata に反映します。</span></div>
         <div><strong>設定コピー (all diffs)</strong><span>現在の難易度から全難易度へ設定をコピーします。<br>
           Metadata、BG、Preview、Timing Points を選べます。<br>
@@ -288,7 +284,7 @@ dotnet build -c Release</code></pre>
 
       <article class="block">
         <h3>再スナップの詳しい挙動</h3>
-        <p>赤線ごとに BPM、拍子、barLength からスナップ間隔を計算します。<br>
+        <p>赤線ごとに <strong>BPM</strong>、<strong>拍子</strong>、<strong>barLength</strong> からスナップ間隔を計算します。<br>
           各スナップ位置の前後半分の範囲に入っているノーツを、そのスナップ位置へ移動します。範囲内に赤線がある場合、次の赤線以降は新しい BPM と拍子で再計算します。</p>
         <p>選べる間隔は <code>1/24</code>、<code>1/36</code>、<code>1/48</code>、<code>1/60</code> です。譜面の意図に合う最小単位を選んでください。実行前に確認ダイアログが表示されます。</p>
       </article>
@@ -303,7 +299,7 @@ dotnet build -c Release</code></pre>
 
       <article class="block">
         <h3>何を変更するか</h3>
-        <p>Eventsセクションの背景行にある Y オフセットを書き換えます。画像ファイルそのものを編集する機能ではありません。背景の表示位置だけを変えたいときに使います。</p>
+        <p>Events セクションの背景行にある <strong>Y オフセット</strong>を書き換えます。<span class="marker warn">画像ファイルそのものを編集する機能ではありません。</span>背景の表示位置だけを変えたいときに使います。</p>
       </article>
 
       <article class="block">
@@ -322,7 +318,7 @@ dotnet build -c Release</code></pre>
       <div class="panel-header">
         <p class="eyebrow">Timing Property</p>
         <h2>現在位置の譜面情報を確認する</h2>
-        <p>Timing Propertyは、編集対象を書き換える画面ではなく、osu! の現在再生位置に対応する値を確認するための補助画面です。設定のアドバンスモードを有効にしている場合にメニューへ表示されます。</p>
+        <p>Timing Property は、編集対象を書き換える画面ではなく、osu! の現在再生位置に対応する値を確認するための補助画面です。設定のアドバンスモードを有効にしている場合にメニューへ表示されます。</p>
       </div>
 
       <div class="definition-list tall">
@@ -364,18 +360,18 @@ dotnet build -c Release</code></pre>
       <div class="panel-header">
         <p class="eyebrow">Safety</p>
         <h2>バックアップと注意事項</h2>
-        <p>このツールは便利ですが、実行時に .osu ファイルを書き換えます。処理の前後で何が起きるかを理解しておくと安心です。</p>
+        <p>このツールは便利ですが、実行時に <code>.osu</code> ファイルを書き換えます。処理の前後で何が起きるかを理解しておくと安心です。</p>
       </div>
 
       <div class="content-columns">
         <article class="block warning">
           <h3>自動バックアップ</h3>
-          <p>SV Editor、Utilityの一部、BG Setter は、上書き前にBackupフォルダへ現在の .osu ファイルをコピーします。<br>
+          <p>SV Editor、Utility の一部、BG Setter は、上書き前に Backup フォルダへ現在の <code>.osu</code> ファイルをコピーします。<br>
             バックアップファイル名には日時が使われ、設定した保持上限を超えた古いファイルは削除されます。</p>
         </article>
         <article class="block warning">
           <h3>手動バックアップ推奨</h3>
-          <p>大きな範囲へのSV適用、全難易度へのコピー、Resnapなどは影響範囲が広い処理です。<br>
+          <p>大きな範囲への SV 適用、全難易度へのコピー、Resnap などは影響範囲が広い処理です。<br>
             公開前の譜面や作業中のセットでは、曲フォルダごと別の場所へコピーしてから試すと安全です。</p>
         </article>
       </div>
@@ -383,7 +379,7 @@ dotnet build -c Release</code></pre>
       <article class="block">
         <h3>実行後の確認</h3>
         <p>成功メッセージは「ファイルへの書き出しが終わった」ことを示します。osu! エディタの表示は自動では更新されません。<br>
-          必ず <kbd>Ctrl</kbd> + <kbd>L</kbd> で再読み込みし、Timing、HitObjects、背景座標を確認してください。</p>
+          必ず <kbd>Ctrl</kbd> + <kbd>L</kbd> で再読み込みし、<strong>Timing</strong>、<strong>HitObjects</strong>、<strong>背景座標</strong>を確認してください。</p>
       </article>
     </section>
 
