@@ -60,7 +60,7 @@
         </article>
         <article>
           <h3>主な機能</h3>
-          <p>SV の適用・削除、ヒットサウンド付与、ノーツ座標変更、タグ編集、設定コピー、再スナップ、背景 Y 位置調整、バックアップ保持数の管理を扱います。</p>
+          <p>SV の適用・削除、ヒットサウンドの統一、ノーツ座標変更、タグ編集、設定コピー、再スナップ、背景 Y 座標調整、バックアップ保持数の管理を扱います。</p>
         </article>
         <article>
           <h3>補助情報の確認</h3>
@@ -93,7 +93,7 @@
         </article>
         <article class="block">
           <h3>起動方法</h3>
-          <p>配布されている実行ファイルがある場合は、基本的に <code>osu!taiko Mapping Helper.exe</code> を実行すれば起動できます。<br>先に osu! を起動し、エディタで対象の taiko 譜面を開いておくと、ツールが現在の譜面を読み取れます。</p>
+          <p>配布されている実行ファイルがある場合は、基本的に <code>osu!taiko Mapping Helper.exe</code> を実行すれば起動できます。<br>osu! を起動し、エディタで対象の taiko 譜面を開いておくと、ツールが現在の譜面を読み取れます。</p>
           <p>ソースから動かす場合だけ、Visual Studio で <code>osu!taiko Mapping Helper.sln</code> を開いてビルドします。<br>開発者向けのコマンドライン例は次の通りです。</p>
           <pre><code>dotnet restore
 dotnet build -c Release</code></pre>
@@ -107,7 +107,7 @@ dotnet build -c Release</code></pre>
           <li>osu!taiko Mapping Helper を起動します。</li>
           <li>ツール上部の譜面名や背景表示が更新されることを確認します。</li>
           <li>メニューから <strong>SV Editor</strong>、<strong>Utility</strong>、<strong>BG Setter</strong> を選びます。</li>
-          <li>条件を入力して <strong>実行</strong> または <strong>Apply</strong> を押します。</li>
+          <li>条件を入力して <strong>実行</strong> を押します。</li>
           <li>成功メッセージが出たら osu! 側で <kbd>Ctrl</kbd> + <kbd>L</kbd> を押します。</li>
         </ol>
       </article>
@@ -188,7 +188,8 @@ dotnet build -c Release</code></pre>
 
       <article class="block">
         <h3>3. Volume</h3>
-        <p>Volume チェックを有効にすると、緑線の音量を指定できます。Volume は 5 から 100 の整数で入力します。小数は受け付けません。<br>Volume チェックを外した場合は、処理地点の直前にある TimingPoint の Volume を参照します。音量を変えずに SV だけを編集したい場合は、Volume を無効にして下さい。</p>
+        <p>Volume チェックを有効にすると、緑線の音量を指定できます。Volume は 5 から 100 の整数で入力します。小数は受け付けません。<br>
+          Volume チェックを外した場合は、処理地点の直前にある TimingPoint の Volume を参照します。音量を変えずに SV だけを編集したい場合は、Volume を無効にして下さい。</p>
       </article>
 
       <div class="content-columns">
@@ -204,7 +205,7 @@ dotnet build -c Release</code></pre>
 
       <article class="block">
         <h3>6. 相対速度変化</h3>
-        <p>設定のアドバンスモードを有効にすると表示されます。通常は入力した SV をそのまま使いますが、相対速度変化では処理地点の直前 SV を基準にして、新しい SV を計算します。<br>
+        <p>設定のアドバンスモードを有効にすると表示されます。通常は入力した SV をそのまま使いますが、相対速度変化では処理前の SV を参照して、新しい SV を計算します。<br>
         <strong>乗算</strong> は <code>(現在の SV - 基準 SV) * 入力 SV + 基準 SV</code> の形で変化します。<strong>加算</strong> は現在の SV に入力 SV を足します。</p>
         <p>基本的には <strong>特定のオブジェクトのみ</strong> と組み合わせて使う機能で、大音符のみに SV を与えたい場合などに有効です。</p>
         <p><strong>終点の有効化</strong> を併用すると、相対変化の始点値と終点値を別々に指定できます。終点の有効化を外した場合は、始点側の値を基準にした一定の相対変化として扱う使い方になります。</p>
@@ -217,6 +218,7 @@ dotnet build -c Release</code></pre>
           <p>指定範囲内の対象タイミングに緑線を追加します。<br>SV や Volume を有効にしている場合は、始点から終点までの位置に応じて値を計算します。</p>
           <p>既存の緑線と重なる場合は、処理対象やオフセットに応じて既存緑線を整理しながら出力します。</p>
           <p>整理の内容として、対象ノーツの直前から対象ノーツまでの間にある既存緑線は、今回置く線と効果が重複しないよう削除対象になることがあります。ただし、選択していないオブジェクトの効果を戻すために必要な線や、kiai の切り替わりを維持するために必要な線は残す・値を引き継ぐように扱われます。</p>
+          <p>適応後は、範囲内や範囲後のスライダーの見た目が崩れにくいよう、必要に応じてsliderLengthを補正します。</p>
         </article>
         <article class="block">
           <h3>8. 削除タブ</h3>
@@ -236,7 +238,7 @@ dotnet build -c Release</code></pre>
         <p>チェックすると、Objects のみで緑線を置くときに、対象ノーツの少し前へ緑線をずらします。</p>
         <p>設定画面のオフセットタイプが <strong>1/16 (1/12) offset</strong> の場合は、BPM から 1/16 分の時間を計算して前に置きます。<strong>ms offset</strong> の場合は、指定したミリ秒分前に置きます。</p>
         <p><strong>1/12 を含める</strong> を有効にすると、1/12 snap の HitObject が含まれる場合に、前の HitObject の方へ SV 線が近づきすぎないように 1/12 分のオフセットを使います。それ以外の配置では 1/16 が使われます。</p>
-        <p>Volume 変化を伴う SV 線を設置する場合は、音量変化がノーツの発音タイミングに食い込みにくくなるため、このチェックボックスを使うことを推奨します。</p>
+        <p>Volume 変化を伴う SV 線を設置する場合は、プレイヤーが早入りして叩くことにより Volume 変化が適応されなくなる場合を防ぐためにこの機能を使うことを推奨します。</p>
       </article>
 
       <article class="block">
@@ -244,29 +246,25 @@ dotnet build -c Release</code></pre>
         <div class="definition-list">
           <div><strong>Objects のみ</strong><span>HitObject、小節線、BookMark、特定オブジェクトを基準に緑線を追加します。基本モードです。</span></div>
           <div><strong>BeatSnaps</strong><span>赤線の BPM からビートスナップ間隔を計算し、指定範囲内に一定間隔で緑線を追加します。<br>
-            ノーツがない場所で音量変化のグラデーションを設置したい場合などに使います。赤線をまたぐ場合は次の BPM に合わせて間隔を再計算します。</span></div>
-          <div><strong>緑線</strong><span>既存の Inherited Point を基準に SV や Volume を更新します。<br>既に置いてある緑線のカーブだけを整えたい場合に使います。</span></div>
+            ノーツがない場所で Volume 変化のグラデーションを設置したい場合などに使います。赤線をまたぐ場合は次の BPM に合わせて間隔を再計算します。</span></div>
+          <div><strong>緑線</strong><span>既存の緑線を基準に SV や Volume を更新します。<br>既に置いてある緑線のカーブだけを整えたい場合に使います。</span></div>
         </div>
       </article>
 
       <article class="block">
         <h3>Objects のみ の詳細</h3>
         <div class="manual-table">
-          <div><strong>すべての Object</strong><span>範囲内の HitObject と小節線・BookMark を対象にします。<br>全ての Object（ノーツ、スライダー、スピナー、小節線、BookMark）に沿って緑線を置きます。<br></span></div>
+          <div><strong>すべての Object</strong><span>全ての Object（ノーツ、スライダー、スピナー、小節線、BookMark）を対象に緑線を置きます。<br></span></div>
           <div><strong>小節線のみ</strong><span>小節線を対象にします。ノーツがない小節線、ノーツがある小節線、両方を対象とし緑線を置きます。<br>
             それぞれの小節線の次の Object にも戻し用の緑線を自動で置いて SV が意図せず次の区間へ残り続けないようにします。</span></div>
           <div><strong>小節線以外</strong><span>小節線と同じタイミングではない Object を対象にします。小節線にも戻し用の緑線を自動で置いて SV が意図せず小節線にかからないようにします。</span></div>
           <div><strong>BookMark のみ</strong><span>BookMark と同じタイミングにある地点だけを対象にします。ノーツがない BookMark、ノーツがある BookMark、両方を対象とし緑線を置きます。<br>
             それぞれの BookMark の次の Object にも戻し用の緑線を自動で置いて SV が意図せず次の区間へ残り続けないようにします。</span></div>
           <div><strong>BookMark 以外</strong><span>BookMark が付いていない Object を対象にします。BookMark にも戻し用の緑線を自動で置いて SV が意図せず BookMark にかからないようにします。<br>目印を付けた場所だけを避けたい場合に使います。</span></div>
-          <div><strong>特定のオブジェクトのみ</strong><span>通常 Don、通常 Kat、大音符 Don、大音符 Kat、Slider、Spinner を個別に選び、選択した種類に一致するオブジェクトだけを処理します。</span></div>
+          <div><strong>特定のオブジェクトのみ</strong><span>通常 Don、通常 Kat、通常 Slider、大音符 Don、大音符 Kat、大音符 Slider、Spinner を個別に選び、選択した種類に一致するオブジェクトだけを処理します。<br>
+            選択していない種類のオブジェクトに対応する既存の緑線は、基本的に触りません。<br>
+            このモードでは、選んだオブジェクトの直前または同時刻に緑線を置き、次のノーツ側にも戻し用の緑線を自動で置いて SV が意図せず次の区間へ残り続けないようにします。</span></div>
         </div>
-      </article>
-
-      <article class="block">
-        <h3>特定のオブジェクトのみ</h3>
-        <p>選択していない種類のオブジェクトに対応する既存緑線は、基本的に触りません。</p>
-        <p>このモードでは、選んだオブジェクトの直前または同時刻に緑線を置き、次のノーツ側にも戻し用の緑線を自動で置いて SV が意図せず次の区間へ残り続けないようにします。<br></p>
       </article>
 
       <article class="block">
@@ -285,7 +283,7 @@ dotnet build -c Release</code></pre>
 
       <div class="definition-list tall">
         <div><strong>オフセット変更 (all diffs)</strong><span>同じ曲フォルダ内の全 .osu ファイルを対象に、指定ミリ秒分タイミングを移動します。<br>
-          PreviewTime、Bookmarks、TimingPoints、HitObjects、スピナー終点、動画イベントの開始時刻が移動対象です。</span></div>
+          PreviewTime、Bookmarks、TimingPoints、HitObjects、動画イベントの開始時刻が移動対象です。</span></div>
         <div><strong>ヒットサウンド設定</strong><span>現在の難易度を対象に、Kat を Clap または Whistle へ統一する機能です。<br>
           Don 系のノーツは基本的に変更せず、Kat と大音符 Kat に選択したヒットサウンドを反映します。</span></div>
         <div><strong>ノーツ座標設定</strong><span>現在の難易度のノーツ座標を書き換えます。<br>
@@ -293,10 +291,10 @@ dotnet build -c Release</code></pre>
           初期値はすべて X=256 / Y=192 です。Random はノーツごとにランダムな座標を設定します。スライダーは制御点も移動します。</span></div>
         <div><strong>タグエディタ (all diffs)</strong><span>タグ入力欄の内容を、同じ曲フォルダ内の全難易度の Metadata に反映します。</span></div>
         <div><strong>設定コピー (all diffs)</strong><span>現在の難易度から全難易度へ設定をコピーします。<br>
-          Metadata、BG Position、Preview、Timing Points を選べます。<br>
+          Metadata、BG、Preview、Timing Points を選べます。<br>
           Timing Points は赤線をコピーし、既存の緑線は各難易度のものを残して出力します。</span></div>
         <div><strong>再スナップ</strong><span>現在の難易度を対象に、指定範囲内のノーツを選択したビートスナップ間隔へ移動します。<br>
-          全ノーツ対象の場合は、最初のノーツから最後のノーツまでを範囲として扱います。</span></div>
+          範囲を指定しなかった場合は、最初のノーツから最後のノーツまでを範囲として扱います。</span></div>
       </div>
 
       <article class="block">
@@ -310,13 +308,13 @@ dotnet build -c Release</code></pre>
     <section class="tab-panel" id="bg-panel">
       <div class="panel-header">
         <p class="eyebrow">BG Setter</p>
-        <h2>背景Y位置の調整</h2>
-        <p>現在の譜面背景を表示し、osu! の背景イベント行に保存されているY位置を調整します。</p>
+        <h2>背景 Y 座標の調整</h2>
+        <p>現在の譜面背景を表示し、osu! の背景イベント行に保存されている Y 座標を調整します。</p>
       </div>
 
       <article class="block">
         <h3>何を変更するか</h3>
-        <p>Eventsセクションの背景行にあるYオフセットを書き換えます。画像ファイルそのものを編集する機能ではありません。背景の表示位置だけを変えたいときに使います。</p>
+        <p>Eventsセクションの背景行にある Y オフセットを書き換えます。画像ファイルそのものを編集する機能ではありません。背景の表示位置だけを変えたいときに使います。</p>
       </article>
 
       <article class="block">
@@ -324,7 +322,7 @@ dotnet build -c Release</code></pre>
         <ol class="compact-steps">
           <li>osu! エディタで対象譜面を開きます。</li>
           <li>メニューから <strong>BG Setter</strong> を開きます。</li>
-          <li>背景を上下にドラッグしてY位置を調整します。</li>
+          <li>背景を上下にドラッグして Y 座標を調整します。</li>
           <li><strong>実行</strong>、または <kbd>Ctrl</kbd> + <kbd>S</kbd> で保存します。</li>
           <li>osu! 側で <kbd>Ctrl</kbd> + <kbd>L</kbd> を押して確認します。</li>
         </ol>
@@ -340,7 +338,7 @@ dotnet build -c Release</code></pre>
 
       <div class="definition-list tall">
         <div><strong>Timing</strong><span>osu! の現在再生位置を <code>mm:ss:fff</code> 形式で表示します。</span></div>
-        <div><strong>BPM</strong><span>現在位置に適用されている赤線のBPMを表示します。</span></div>
+        <div><strong>BPM</strong><span>現在位置に適用されている赤線の BPM を表示します。</span></div>
         <div><strong>SV</strong><span>現在位置に適用されている SV を表示します。</span></div>
         <div><strong>Volume</strong><span>現在位置に適用されている Volume を表示します。</span></div>
         <div><strong>見た目 BPM</strong><span>BPM、SV、SliderMultiplier をもとに、見た目上のスクロール速度を BPM 相当で表示します。</span></div>
@@ -396,7 +394,7 @@ dotnet build -c Release</code></pre>
       <article class="block">
         <h3>実行後の確認</h3>
         <p>成功メッセージは「ファイルへの書き出しが終わった」ことを示します。osu! エディタの表示は自動では更新されません。<br>
-          必ず <kbd>Ctrl</kbd> + <kbd>L</kbd> で再読み込みし、Timing、HitObjects、背景位置を確認してください。</p>
+          必ず <kbd>Ctrl</kbd> + <kbd>L</kbd> で再読み込みし、Timing、HitObjects、背景座標を確認してください。</p>
       </article>
     </section>
 
@@ -416,7 +414,7 @@ dotnet build -c Release</code></pre>
         <details>
           <summary>実行後に変化が見えない</summary>
           <p>osu! 側で <kbd>Ctrl</kbd> + <kbd>L</kbd> を押して譜面を再読み込みしてください。<br>
-            ツールがファイルを書き換えても、エディタ表示は自動更新されません。</p>
+            ツールがファイルを書き換えても、エディタの表示は自動更新されません。</p>
         </details>
         <details>
           <summary>Timing の入力でエラーになる</summary>
