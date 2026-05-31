@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-labelledby="title desc">
+  <title id="title">終点の有効化を使った相対速度変化の乗算イメージ</title>
+  <desc id="desc">乗算の入力値が始点の 1.0 から終点の 1.5 へ変化し、基準 SV からの距離が徐々に大きくなる様子。</desc>
+  <defs>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#ff4d57"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#31a8ff"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: "Yu Gothic UI", "Meiryo", sans-serif; fill: #d8e3f2; font-size: 17px; }
+    .caption { font-size: 15px; fill: #93a8bf; }
+    .formula { font-size: 18px; font-weight: 700; fill: #f8fbff; }
+    .axis { stroke: #53667f; stroke-width: 2; }
+    .base { stroke: #ff9f43; stroke-width: 3; fill: none; stroke-dasharray: 12 10; }
+    .before { stroke: #ff4d57; stroke-width: 4; fill: none; stroke-linecap: round; }
+    .after { stroke: #31a8ff; stroke-width: 4; fill: none; stroke-linecap: round; }
+    .delta-before { stroke: #ff4d57; stroke-width: 3.4; marker-end: url(#arrowRed); }
+    .delta-after { stroke: #31a8ff; stroke-width: 3.4; marker-end: url(#arrowBlue); }
+    .label-before { fill: #ff6b73; font-weight: 700; }
+    .label-after { fill: #31a8ff; font-weight: 700; }
+    .label-base { fill: #ff9f43; font-weight: 700; }
+  </style>
+  <rect width="720" height="360" rx="10" fill="#0b1017"/>
+  <rect x="20" y="18" width="680" height="324" rx="8" fill="#101823" stroke="#28374a"/>
+  <text class="formula" x="42" y="52">End Timing enabled example: Multiply value from ×1.0 to ×1.5</text>
+  <line class="axis" x1="48" y1="276" x2="675" y2="276"/>
+  <line class="axis" x1="48" y1="296" x2="48" y2="82"/>
+  <text class="caption" x="640" y="304">Timing</text>
+  <text class="caption" x="24" y="94">SV</text>
+  <line class="base" x1="48" y1="134" x2="675" y2="134"/>
+  <path class="before" d="M70 210 L185 226 L260 188 L385 214 L470 176 L650 206"/>
+  <path class="after" d="M70 210 L185 235 L260 199 L385 238 L470 193 L650 242"/>
+  <line class="delta-after" x1="70" y1="134" x2="70" y2="205"/>
+  <line class="delta-before" x1="585" y1="134" x2="585" y2="190"/>
+  <line class="delta-after" x1="625" y1="134" x2="625" y2="230"/>
+  <text fill="#31a8ff" font-weight="700" x="80" y="176">× 1.0</text>
+  <text fill="#ff4d57" font-weight="700" x="530" y="173">× 1.0</text>
+  <text fill="#31a8ff" font-weight="700" x="637" y="173">× 1.5</text>
+  <text class="label-base" x="520" y="122">BaseSV</text>
+  <text class="label-before" x="366" y="163">SV before change</text>
+  <text class="label-after" x="424" y="250">SV after change</text>
+</svg>

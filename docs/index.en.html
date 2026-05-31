@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>osu!taiko Mapping Helper User Guide</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">User Guide</p>
+      <h1>osu!taiko Mapping Helper User Guide</h1>
+    </div>
+    <div class="header-meta" aria-label="Document information">
+      <span>Version 1.1.0-beta</span>
+      <a href="index.html">Japanese</a>
+      <span>English</span>
+      <a href="https://github.com/miyagish1m4/osutaiko-mapping-helper">GitHub</a>
+    </div>
+  </header>
+
+  <main class="manual-shell">
+    <input checked type="radio" name="manual-tab" id="tab-overview">
+    <input type="radio" name="manual-tab" id="tab-start">
+    <input type="radio" name="manual-tab" id="tab-sv">
+    <input type="radio" name="manual-tab" id="tab-utility">
+    <input type="radio" name="manual-tab" id="tab-bg">
+    <input type="radio" name="manual-tab" id="tab-timing-property">
+    <input type="radio" name="manual-tab" id="tab-settings">
+    <input type="radio" name="manual-tab" id="tab-safety">
+    <input type="radio" name="manual-tab" id="tab-trouble">
+
+    <nav class="tab-list" aria-label="Guide sections">
+      <label for="tab-overview">Overview</label>
+      <label for="tab-start">Setup and Basic Use</label>
+      <label for="tab-sv">SV Editor</label>
+      <label for="tab-utility">Utility</label>
+      <label for="tab-bg">BG Setter</label>
+      <label for="tab-timing-property">Timing Property</label>
+      <label for="tab-settings">Settings</label>
+      <label for="tab-safety">Backup and Notes</label>
+      <label for="tab-trouble">Troubleshooting</label>
+    </nav>
+
+    <section class="tab-panel" id="overview-panel">
+      <div class="panel-header">
+        <p class="eyebrow">Overview</p>
+        <h2>What this tool does</h2>
+        <p>osu!taiko Mapping Helper reads the taiko beatmap currently opened in the osu! editor and helps with <strong>SV editing</strong> and <strong>batch editing</strong>. The target is either the currently selected <code>.osu</code> file, or all difficulties in the same song folder depending on the feature.</p>
+      </div>
+
+      <div class="dense-grid">
+        <article>
+          <h3>Reads the current beatmap</h3>
+          <p>The tool reads the running osu! process, the opened song folder, the <code>.osu</code> file name, playback position, metadata, and background image information. If the beatmap name appears in the tool, it has detected the target beatmap.</p>
+        </article>
+        <article>
+          <h3>Edits .osu files directly</h3>
+          <p><strong>SV Editor</strong>, <strong>Utility</strong>, and <strong>BG Setter</strong> rewrite <code>.osu</code> files. After running a process, press <kbd>Ctrl</kbd> + <kbd>L</kbd> in the osu! editor to reload the file.</p>
+        </article>
+        <article>
+          <h3>Main features</h3>
+          <p>The tool can apply or delete SV lines, normalize hitsounds, change note coordinates, edit tags, copy settings, resnap notes, adjust background Y position, and manage backup retention.</p>
+        </article>
+        <article>
+          <h3>Reference information</h3>
+          <p><strong>Timing Property</strong> shows the Timing, BPM, SV, Volume, and Scroll Speed (BPM) at the current osu! playback position. It is useful for checking values while building SV effects.</p>
+        </article>
+      </div>
+
+      <div class="callout">
+        <h3>Basic workflow</h3>
+        <p>The common flow is: <strong>open the target beatmap in osu!</strong>, <strong>enter conditions in the tool</strong>, <strong>execute the process</strong>, and then press <kbd>Ctrl</kbd> + <kbd>L</kbd> in osu!. A success message means the file was written, but the osu! editor view is not refreshed until you reload it.</p>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="start-panel">
+      <div class="panel-header">
+        <p class="eyebrow">Start</p>
+        <h2>Setup and basic use</h2>
+        <p>This section covers the shared flow from launch to checking the result.</p>
+      </div>
+
+      <div class="content-columns">
+        <article class="block">
+          <h3>Requirements</h3>
+          <ul>
+            <li>Windows</li>
+            <li>osu! stable</li>
+            <li>.NET 8 Desktop Runtime, or .NET 8 SDK</li>
+            <li>Visual Studio 2022 or later if you build from source</li>
+          </ul>
+        </article>
+        <article class="block">
+          <h3>Launch</h3>
+          <p>If you have a released executable, run <code>osu!taiko Mapping Helper.exe</code>. Start osu!, open the target taiko beatmap in the editor, and the tool will read that beatmap.</p>
+          <p>Building from source is mainly for developers. Open <code>osu!taiko Mapping Helper.sln</code> in Visual Studio, or build from the command line:</p>
+          <pre><code>dotnet restore
+dotnet build -c Release</code></pre>
+        </article>
+      </div>
+
+      <article class="block">
+        <h3>Basic flow</h3>
+        <ol class="compact-steps">
+          <li>Start osu! and open the taiko beatmap you want to edit.</li>
+          <li>Start osu!taiko Mapping Helper.</li>
+          <li>Check that the beatmap name and background information in the tool are updated.</li>
+          <li>Choose <strong>SV Editor</strong>, <strong>Utility</strong>, or <strong>BG Setter</strong> from the menu.</li>
+          <li>Enter the conditions and press <strong>Execute</strong>.</li>
+          <li>When the success message appears, press <kbd>Ctrl</kbd> + <kbd>L</kbd> in osu!.</li>
+        </ol>
+      </article>
+    </section>
+
+    <section class="tab-panel" id="sv-panel">
+      <div class="panel-header">
+        <p class="eyebrow">SV Editor</p>
+        <h2>Apply and delete SV lines</h2>
+        <p>The explanation follows the GUI order: Timing, SV, Volume, target options, and Execute.</p>
+      </div>
+
+      <article class="block">
+        <h3>1. Timing</h3>
+        <p>Set the start and end of the processing range.<br>
+          Inputs accept <code>mm:ss:fff</code> format or an integer millisecond value. For example, <code>01:23:456</code> and <code>83456</code> are both valid.</p>
+        <p><strong>Set Start Timing</strong> and <strong>Set End Timing</strong> copy the current osu! playback position into the start or end field.</p>
+        <p>The <strong>⇔ button</strong> swaps start and end. Execution fails if the start timing is later than the end timing.</p>
+      </article>
+
+      <article class="block">
+        <h3>2. SV</h3>
+        <p>When the SV checkbox is enabled, you can specify the SV value to add or update.<br>
+          Enter a number greater than 0. Decimal values are allowed.<br>
+          If the SV checkbox is disabled, the tool refers to the green line immediately before the processing point and does not explicitly change the SV value.</p>
+        <p><strong>Linear mode</strong> changes the value by a constant difference from start to end.<br>
+          <strong>Geometric mode</strong> changes the value by ratio.</p>
+        <div class="formula-grid" aria-label="SV formulas">
+          <div>
+            <strong>Linear mode</strong>
+            <code>SV(t) = SV_start + (SV_end - SV_start) * p</code>
+          </div>
+          <div>
+            <strong>Geometric mode</strong>
+            <code>SV(t) = SV_start * (SV_end / SV_start) ^ p</code>
+          </div>
+        </div>
+        <p class="small-note"><code>p</code> is the progress inside the range. It is <code>0</code> at the start and <code>1</code> at the end.</p><br>
+        <div class="sv-graph-pair">
+          <figure class="sv-graph" aria-label="SV change when the end SV is higher than the start SV">
+            <img src="assets.en/sv-change-up.svg" alt="Linear and geometric SV change when the end SV is higher than the start SV">
+            <figcaption>When the end SV is higher</figcaption>
+          </figure>
+          <figure class="sv-graph" aria-label="SV change when the end SV is lower than the start SV">
+            <img src="assets.en/sv-change-down.svg" alt="Linear and geometric SV change when the end SV is lower than the start SV">
+            <figcaption>When the end SV is lower</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="block">
+        <h3>3. Volume</h3>
+        <p>When the Volume checkbox is enabled, you can specify the volume of the green lines.<br>
+          Enter an integer from 5 to 100. Decimal values are not accepted.<br>
+          If the Volume checkbox is disabled, the tool refers to the volume of the red or green line immediately before the processing point. Disable Volume when you want to edit only SV without changing volume.</p>
+      </article>
+
+      <div class="content-columns">
+        <article class="block">
+          <h3>4. Apply Start Timing</h3>
+          <p>If disabled, an object exactly at the start timing is excluded from processing.</p>
+        </article>
+        <article class="block">
+          <h3>5. Apply End Timing</h3>
+          <p>If disabled, an object exactly at the end timing is excluded from processing.</p>
+        </article>
+      </div>
+
+      <article class="block">
+        <h3>6. Relative Mode</h3>
+        <p>This option appears when <strong>AdvanceMode</strong> is enabled in Settings.<br>
+          Normally the entered SV is used as-is, but Relative Mode calculates the new SV by referring to the SV before processing.<br><br>
+        <strong>Multiply</strong> uses <code>(current SV - BaseSV) * input SV + BaseSV</code>.<br>
+        <strong>Sum</strong> adds the input SV to the current SV.</p>
+        <div class="sv-graph-pair relative-graph-pair">
+          <figure class="sv-graph relative-graph" aria-label="Relative Mode add image">
+            <img src="assets.en/relative-sv-add.svg" alt="Add mode image: input SV is added to the SV before processing">
+          </figure>
+          <figure class="sv-graph relative-graph" aria-label="Relative Mode multiply image">
+            <img src="assets.en/relative-sv-multiply.svg" alt="Multiply mode image: distance from BaseSV is changed by ratio">
+          </figure>
+        </div><br>
+        <p><strong>Enable End Timing</strong> lets you specify separate relative values for the start and end of the range.</p>
+        <div class="sv-graph-pair relative-graph-pair">
+          <figure class="sv-graph relative-graph" aria-label="Add mode with enabled end point">
+            <img src="assets.en/relative-sv-add-end.svg" alt="Add value changes from -0.0 at the start to -1.0 at the end">
+          </figure>
+          <figure class="sv-graph relative-graph" aria-label="Multiply mode with enabled end point">
+            <img src="assets.en/relative-sv-multiply-end.svg" alt="Multiply value changes from 1.0 at the start to 1.5 at the end">
+          </figure>
+        </div>
+      </article>
+
+      <div class="content-columns">
+        <article class="block">
+          <h3>7. Apply tab</h3>
+          <p>Adds green lines to target timings inside the selected range.<br>
+            If SV or Volume is enabled, values are calculated according to the position between start and end.</p>
+          <p>When existing green lines overlap, the tool <strong>organizes existing green lines</strong> according to the target and offset.</p>
+          <p>Green lines between the target note and the next target note may be removed if they would duplicate the new line's effect. However, lines required to restore unselected objects, or to preserve kiai changes, are kept or have their values inherited.</p>
+          <p>After applying, <code>sliderLength</code> is corrected if needed so that sliders before or after the range do not visually break.</p>
+          <p>kiai state is inherited from the previous red or green line.</p>
+        </article>
+        <article class="block">
+          <h3>8. Delete tab</h3>
+          <p>Deletes green lines inside the selected range. Red lines are not deleted.</p>
+          <p>After deletion, <code>sliderLength</code> is corrected if needed so that sliders before or after the range do not visually break.</p>
+        </article>
+      </div>
+
+      <article class="block">
+        <h3>9. Offset</h3>
+        <p>When enabled, green lines placed by <strong>Only Objects</strong> are shifted slightly before the target note.</p>
+        <p>If the Settings offset type is...<br><strong>1/16 (1/12) offset</strong>, the offset is calculated from BPM as a 1/16 note.<br>
+          If the type is <strong>ms offset</strong>, the configured millisecond value is used.</p>
+        <p>When <strong>1/12 inclusive</strong> is enabled, 1/12 offset is used if the range includes 1/12 snap HitObjects, so the SV line does not become too close to the previous HitObject. Otherwise, 1/16 is used.</p>
+        <p>This option is recommended when placing SV lines with Volume changes, because it helps prevent the player from hitting before the volume change is applied.</p>
+      </article>
+
+      <article class="block">
+        <h3>10. Target selection</h3>
+        <div class="definition-list">
+          <div><strong>Only Objects</strong><span>Adds green lines based on <strong>HitObjects, barlines, BookMarks, or specific objects</strong>. This is the basic mode.</span></div>
+          <div><strong>BeatSnaps</strong><span>Calculates beat snap intervals from red-line BPM and adds green lines at <strong>regular intervals</strong> in the selected range.<br>
+            Use this when you want to place a volume gradient where there are no notes.<br>
+            If the range crosses a red line, intervals after that point are recalculated using the next BPM.</span></div>
+          <div><strong>Inherited Points</strong><span>Updates SV or Volume based on <strong>existing green lines</strong>.<br>Use this when you want to adjust a curve that is already made from green lines.</span></div>
+        </div>
+      </article>
+
+      <article class="block">
+        <h3>Only Objects details</h3>
+        <div class="manual-table">
+          <div><strong>All Objects</strong><span>Targets <strong>all Objects: notes, sliders, spinners, barlines, and BookMarks</strong>, and places green lines on them.</span></div>
+          <div><strong>On Barlines</strong><span>Targets <strong>barlines</strong>. Both empty barlines and barlines with notes are processed.<br>
+            The tool also places restore lines on the next Object after each barline, so the SV does not unintentionally continue into the next section.</span></div>
+          <div><strong>Except Barlines</strong><span>Targets Objects that are not at the same timing as a barline.<br>
+            Restore lines are also placed on barlines, so the SV does not unintentionally affect barlines.</span></div>
+          <div><strong>On BookMarks</strong><span>Targets positions with the same timing as a <strong>BookMark</strong>. Both BookMarks without notes and BookMarks with notes are processed.<br>
+            The tool also places restore lines on the next Object after each BookMark.</span></div>
+          <div><strong>Except BookMarks</strong><span>Targets Objects without a BookMark.<br>
+            Restore lines are also placed on BookMarks, so the SV does not unintentionally affect BookMark positions. Use this when you want to avoid only marked positions.</span></div>
+          <div><strong>Specific objects</strong><span>Choose from <strong>Normal Don, Normal Kat, Normal Slider, Finisher Don, Finisher Kat, Finisher Slider, and Spinner</strong>. Only matching objects are processed.<br>
+            Existing green lines for unselected object types are basically left untouched.<br>
+            In this mode, the tool places a green line immediately before or at the selected object, and also places a restore line on the next note so the SV does not remain in the next section.</span></div>
+        </div>
+      </article>
+
+      <article class="block">
+        <h3>11. Execute button</h3>
+        <p>Press <strong>Execute</strong> to overwrite the <code>.osu</code> file using the current inputs and target options.<br>
+          A backup is created before execution, and a success message is shown when writing is complete. Finally, press <kbd>Ctrl</kbd> + <kbd>L</kbd> in osu! to reload.</p>
+      </article>
+    </section>
+
+    <section class="tab-panel" id="utility-panel">
+      <div class="panel-header">
+        <p class="eyebrow">Utility</p>
+        <h2>Batch edits and helper features</h2>
+        <p>Utility is where non-SV batch editing features are grouped.</p>
+      </div>
+
+      <div class="definition-list tall">
+        <div><strong>Offset Shifter (all diffs)</strong><span><strong>Moves timing</strong> by the specified milliseconds for all <code>.osu</code> files in the same song folder.<br>
+          PreviewTime, Bookmarks, TimingPoints, HitObjects, and animation event start times are moved.</span></div>
+        <div><strong>Hitsound Option</strong><span>Unifies Kat hitsounds in the current difficulty to <strong>Clap or Whistle</strong>.<br>
+          Don notes are basically not changed. The selected hitsound is applied to Kat and big Kat.</span></div>
+        <div><strong>Notes Position</strong><span>Rewrites note coordinates in the current difficulty.<br>
+          <strong>Center</strong> uses X=256 / Y=192.<br>
+          <strong>Separate</strong> uses the coordinates configured in Settings for Don, Kat, big Don, and big Kat.<br>
+          <strong>Random</strong> assigns random coordinates per note. Slider control points are moved as well.</span></div>
+        <div><strong>Tag Editor (all diffs)</strong><span>Applies the tag input to the <strong>Metadata of all difficulties</strong> in the same song folder.</span></div>
+        <div><strong>Settings Copier (all diffs)</strong><span>Copies settings from the current difficulty to <strong>all difficulties</strong>.<br>
+          You can choose Metadata, BG, Preview, and Timing Points.<br>
+          Timing Points copies red lines and keeps each difficulty's existing green lines in the output.</span></div>
+        <div><strong>Resnap</strong><span>Moves notes in the selected range of the current difficulty to the <strong>selected beat snap interval</strong>.<br>
+          If no range is specified, the range from the first note to the last note is used.</span></div>
+      </div>
+
+      <article class="block">
+        <h3>Resnap behavior</h3>
+        <p>For each red line, the tool calculates snap intervals from <strong>BPM</strong>, <strong>meter</strong>, and <strong>barLength</strong>.<br>
+          Notes within half a snap before or after each snap position are moved to that snap position. If a red line exists inside the range, the next section is recalculated using the new BPM and meter.</p>
+        <p>Available intervals are <code>1/24</code>, <code>1/36</code>, <code>1/48</code>, and <code>1/60</code>. Choose the smallest unit that matches the beatmap's rhythm. A confirmation dialog appears before execution.</p>
+      </article>
+    </section>
+
+    <section class="tab-panel" id="bg-panel">
+      <div class="panel-header">
+        <p class="eyebrow">BG Setter</p>
+        <h2>Adjust background Y position</h2>
+        <p>Shows the current beatmap background and adjusts the Y coordinate stored in the osu! background event line.</p>
+      </div>
+
+      <article class="block">
+        <h3>What changes</h3>
+        <p>BG Setter rewrites the <strong>Y offset</strong> in the background line of the Events section. <span class="marker warn">It does not edit the image file itself.</span> Use it when you only want to change the displayed background position.</p>
+      </article>
+
+      <article class="block">
+        <h3>How to use</h3>
+        <ol class="compact-steps">
+          <li>Open the target beatmap in the osu! editor.</li>
+          <li>Open <strong>BG Setter</strong> from the menu.</li>
+          <li>Drag the background up or down to adjust the Y coordinate.</li>
+          <li>Save with <strong>Execute</strong> or <kbd>Ctrl</kbd> + <kbd>S</kbd>.</li>
+          <li>Press <kbd>Ctrl</kbd> + <kbd>L</kbd> in osu! to check the result.</li>
+        </ol>
+      </article>
+    </section>
+
+    <section class="tab-panel" id="timing-property-panel">
+      <div class="panel-header">
+        <p class="eyebrow">Timing Property</p>
+        <h2>Check beatmap values at the current position</h2>
+        <p>Timing Property is a reference screen, not an editing screen. It shows values corresponding to the current osu! playback position. It appears in the menu when <strong>AdvanceMode</strong> is enabled in Settings.</p>
+      </div>
+
+      <div class="definition-list tall">
+        <div><strong>Timing</strong><span>Shows the current osu! playback position in <code>mm:ss:fff</code> format.</span></div>
+        <div><strong>BPM</strong><span>Shows the <strong>BPM of the red line</strong> applied at the current position.</span></div>
+        <div><strong>SV</strong><span>Shows the <strong>SV</strong> applied at the current position.</span></div>
+        <div><strong>Scroll Speed (BPM)</strong><span>Shows the <strong>visual scroll speed</strong> as a BPM-equivalent value based on BPM, SV, and SliderMultiplier.</span></div>
+        <div><strong>Volume</strong><span>Shows the <strong>Volume</strong> applied at the current position.</span></div>
+      </div>
+
+      <article class="block">
+        <h3>How to use</h3>
+        <p>When you play or seek in the osu! editor, Timing Property values update.<br>
+          Before making a detailed SV curve, checking the current BPM and SV here makes it easier to decide the value to enter.</p>
+      </article>
+    </section>
+
+    <section class="tab-panel" id="settings-panel">
+      <div class="panel-header">
+        <p class="eyebrow">Settings</p>
+        <h2>Settings items</h2>
+        <p>Settings controls the whole tool's display language, backup retention, offset type, and note coordinates.</p>
+      </div>
+
+      <div class="definition-list tall">
+        <div><strong>Language</strong><span>Switches between <strong>English / Japanese</strong>.</span></div>
+        <div><strong>Backup Limit</strong><span>The number of <strong>backup files</strong> kept per beatmap.<br>
+          Enter an integer from 1 to 100. Older backups are deleted when saving if the limit is exceeded.</span></div>
+        <div><strong>Offset Type</strong><span>Switches the SV Editor offset input between <strong>snap-based</strong> and <strong>millisecond-based</strong>.</span></div>
+        <div><strong>Note Position</strong><span>Sets X / Y coordinates for Don, Kat, big Don, and big Kat when using <strong>Separate</strong>.<br>
+          X must be from 0 to 512, and Y must be from 0 to 384.<br>
+          Defaults are:<br>
+          Don: X=64 / Y=64<br>
+          Kat: X=448 / Y=64<br>
+          Big Don: X=64 / Y=320<br>
+          Big Kat: X=448 / Y=320</span></div>
+        <div><strong>Unicode Support</strong><span>Uses <strong>TitleUnicode / ArtistUnicode</strong> for beatmap title display.<br>
+          This allows Japanese or special-character titles to be displayed.</span></div>
+        <div><strong>AdvanceMode</strong><span>Shows <strong>additional editing items</strong> such as Relative Mode and Timing Property.</span></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="safety-panel">
+      <div class="panel-header">
+        <p class="eyebrow">Safety</p>
+        <h2>Backup and cautions</h2>
+        <p>This tool is convenient, but it rewrites <code>.osu</code> files during execution. It is safer to understand what changes before and after processing.</p>
+      </div>
+
+      <div class="content-columns">
+        <article class="block warning">
+          <h3>Automatic backups</h3>
+          <p>SV Editor, parts of Utility, and BG Setter copy the current <code>.osu</code> file to the Backup folder before overwriting.<br>
+            Backup file names include the date and time. Old backups over the configured keep limit are deleted.</p>
+        </article>
+        <article class="block warning">
+          <h3>Manual backups are recommended</h3>
+          <p>Large SV operations, copying to all difficulties, and Resnap can affect a wide range of the beatmap.<br>
+            For published beatmaps or active worksets, copy the whole song folder somewhere else before testing.</p>
+        </article>
+      </div>
+
+      <article class="block">
+        <h3>Check after execution</h3>
+        <p>A success message means writing to the file is complete. The osu! editor view is not updated automatically.<br>
+          Always reload with <kbd>Ctrl</kbd> + <kbd>L</kbd> and check <strong>Timing</strong>, <strong>HitObjects</strong>, and <strong>background coordinates</strong>.</p>
+      </article>
+    </section>
+
+    <section class="tab-panel" id="trouble-panel">
+      <div class="panel-header">
+        <p class="eyebrow">Troubleshooting</p>
+        <h2>When something does not work</h2>
+        <p>Common symptoms and things to check.</p>
+      </div>
+
+      <div class="faq-list">
+        <details>
+          <summary>The beatmap name or background does not appear</summary>
+          <p>Check that osu! is running and that a beatmap is open in the editor.<br>
+            Detection can also fail if the song folder or <code>.osu</code> file was moved or deleted.</p>
+        </details>
+        <details>
+          <summary>I cannot see the changes after execution</summary>
+          <p>Press <kbd>Ctrl</kbd> + <kbd>L</kbd> in osu! to reload the beatmap.<br>
+            Even if the tool rewrites the file, the editor view is not refreshed automatically.</p>
+        </details>
+        <details>
+          <summary>Timing input causes an error</summary>
+          <p>Enter the value in <code>mm:ss:fff</code> format or as an integer millisecond value.<br>
+            An error also occurs if the start timing is later than the end timing.</p>
+        </details>
+        <details>
+          <summary>SV or Volume causes an error</summary>
+          <p>SV must be a positive number. Volume should be an integer from 5 to 100.<br>
+            The BaseSV for Relative Mode must also be a positive value.</p>
+        </details>
+        <details>
+          <summary>I want to reduce backup files</summary>
+          <p>Change the backup keep limit in Settings and save it.<br>
+            You can specify a value from 1 to 100, and old backups are cleaned up after saving.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>osu!taiko Mapping Helper User Guide</span>
+    <a href="index.html">Japanese</a>
+    <a href="https://github.com/miyagish1m4/osutaiko-mapping-helper">GitHub repository</a>
+  </footer>
+</body>
+</html>
