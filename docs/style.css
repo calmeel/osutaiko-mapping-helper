@@ -150,7 +150,7 @@ h3 {
 
 h1 {
   margin-bottom: 0.45rem;
-  font-size: clamp(1.55rem, 3vw, 2.6rem);
+  font-size: clamp(1.35rem, 2.3vw, 2.05rem);
 }
 
 h2 {
@@ -436,8 +436,12 @@ details,
   border-top: 0;
 }
 
-.manual-table strong {
+.manual-table > div > strong:first-child {
   color: var(--brand);
+}
+
+.manual-table > div > span strong {
+  color: var(--ink);
 }
 
 .manual-table span {
@@ -451,8 +455,12 @@ details,
   padding: 0.85rem 1rem;
 }
 
-.definition-list strong {
+.definition-list > div > strong:first-child {
   color: var(--brand);
+}
+
+.definition-list > div > span strong {
+  color: var(--ink);
 }
 
 .definition-list.tall > div {

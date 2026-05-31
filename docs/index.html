@@ -15,6 +15,7 @@
     <div class="header-meta" aria-label="ドキュメント情報">
       <span>Version 1.1.0-beta</span>
       <span>Japanese</span>
+      <a href="index.en.html">English</a>
       <a href="https://github.com/miyagish1m4/osutaiko-mapping-helper">GitHub</a>
     </div>
   </header>
@@ -111,11 +112,6 @@ dotnet build -c Release</code></pre>
           <li>成功メッセージが出たら osu! 側で <kbd>Ctrl</kbd> + <kbd>L</kbd> を押します。</li>
         </ol>
       </article>
-
-      <article class="block">
-        <h3>操作の前提</h3>
-        <p><strong>Timing</strong>、<strong>SV</strong>、<strong>Volume</strong> などの入力欄は各機能タブで説明します。まずは、ツールが現在の譜面を認識していることと、実行後に osu! 側で再読み込みすることだけ覚えておけば大丈夫です。</p>
-      </article>
     </section>
 
     <section class="tab-panel" id="sv-panel">
@@ -127,15 +123,18 @@ dotnet build -c Release</code></pre>
 
       <article class="block">
         <h3>1. Timing</h3>
-        <p>処理する範囲の<strong>始点</strong>と<strong>終点</strong>を指定します。入力は <code>mm:ss:fff</code> 形式、またはミリ秒の整数に対応しています。たとえば <code>01:23:456</code> と <code>83456</code> はどちらも受け付けます。</p>
+        <p>処理する範囲の始点と終点を指定します。<br>
+          入力は <code>mm:ss:fff</code> 形式、またはミリ秒の整数に対応しています。たとえば <code>01:23:456</code> と <code>83456</code> はどちらも受け付けます。</p>
         <p><strong>Set Start Timing</strong> と <strong>Set End Timing</strong> は、osu! の現在の再生位置をそれぞれ始点・終点に入れるボタンです。</p>
-        <p><strong>⇔</strong> ボタンは始点と終点を入れ替えます。<span class="marker danger">始点が終点より後ろ</span>にある状態では実行時にエラーになります。</p>
+        <p><strong>⇔ ボタン</strong>は始点と終点を入れ替えます。始点が終点より後ろにある状態では実行時にエラーになります。</p>
       </article>
 
       <article class="block">
         <h3>2. SV</h3>
-        <p>SV チェックを有効にすると、追加または更新する緑線の SV を指定できます。<br><strong>SV は 0 より大きい数値</strong>を入力します。小数も使用できます。<br>SV チェックを外した場合は、処理地点の直前にある緑線の SV を参照して、SV 値を明示的には変更しません。</p>
-        <p><strong>等差モード</strong> は始点から終点まで一定量ずつ変化します。<strong>等比モード</strong> は比率で変化します。</p>
+        <p>SV チェックを有効にすると、追加または更新する緑線の SV を指定できます。<br>
+          SV は 0 より大きい数値を入力します。小数も使用できます。<br>SV チェックを外した場合は、処理地点の直前にある緑線の SV を参照して、SV 値を明示的には変更しません。</p>
+        <p><strong>等差モード</strong> は始点から終点まで一定量ずつ変化します。<br>
+          <strong>等比モード</strong> は比率で変化します。</p>
         <div class="formula-grid" aria-label="SV 計算式">
           <div>
             <strong>等差モード</strong>
@@ -146,7 +145,7 @@ dotnet build -c Release</code></pre>
             <code>SV(t) = SV_start * (SV_end / SV_start) ^ p</code>
           </div>
         </div>
-        <p class="small-note"><code>p</code> は範囲内の進行率です。始点では <code>0</code>、終点では <code>1</code> になります。</p>
+        <p class="small-note"><code>p</code> は範囲内の進行率です。始点では <code>0</code>、終点では <code>1</code> になります。</p><br>
         <div class="sv-graph-pair">
           <figure class="sv-graph" aria-label="終点の SV が始点より高い場合の変化イメージ">
             <img src="assets/sv-change-up.svg" alt="終点の SV が始点より高い場合の等差と等比の変化イメージ">
@@ -157,13 +156,13 @@ dotnet build -c Release</code></pre>
             <figcaption>終点の SV が低い場合</figcaption>
           </figure>
         </div>
-        <p class="small-note">同じ始点・終点でも、等差は直線的、等比は倍率的に変化します。</p>
       </article>
 
       <article class="block">
         <h3>3. Volume</h3>
-        <p>Volume チェックを有効にすると、緑線の音量を指定できます。<strong>Volume は 5 から 100 の整数</strong>で入力します。小数は受け付けません。<br>
-          Volume チェックを外した場合は、処理地点の直前にある赤線 or 緑線 の Volume を参照します。音量を変えずに SV だけを編集したい場合は、<span class="marker">Volume を無効</span>にして下さい。</p>
+        <p>Volume チェックを有効にすると、緑線の音量を指定できます。<br>
+          Volume は 5 から 100 の整数で入力します。小数は受け付けません。<br>
+          Volume チェックを外した場合は、処理地点の直前にある赤線 or 緑線 の Volume を参照します。音量を変えずに SV だけを編集したい場合は、Volume を無効にして下さい。</p>
       </article>
 
       <div class="content-columns">
@@ -179,9 +178,10 @@ dotnet build -c Release</code></pre>
 
       <article class="block">
         <h3>6. 相対速度変化</h3>
-        <p>設定のアドバンスモードを有効にすると表示されます。通常は入力した SV をそのまま使いますが、相対速度変化では<strong>処理前の SV を参照</strong>して、新しい SV を計算します。<br>
-        <strong>乗算</strong> は <code>(現在の SV - 基準 SV) * 入力 SV + 基準 SV</code> の形で変化します。<strong>加算</strong> は現在の SV に入力 SV を足します。</p>
-        <p><strong>終点の有効化</strong> を併用すると、相対変化の始点値と終点値を別々に指定できます。終点の有効化を外した場合は、始点側の値を基準にした一定の相対変化として扱う使い方になります。</p>
+        <p>設定のアドバンスモードを有効にすると表示されます。<br>
+          通常は入力した SV をそのまま使いますが、相対速度変化では<strong>処理前の SV を参照</strong>して、新しい SV を計算します。<br><br>
+        <strong>乗算</strong> は <code>(現在の SV - 基準 SV) * 入力 SV + 基準 SV</code> の形で変化します。<br>
+        <strong>加算</strong> は現在の SV に入力 SV を足します。</p>
         <div class="sv-graph-pair relative-graph-pair">
           <figure class="sv-graph relative-graph" aria-label="相対速度変化の加算イメージ">
             <img src="assets/relative-sv-add.svg" alt="処理前の SV に入力 SV を足して変化後の SV を作る加算のイメージ">
@@ -189,8 +189,8 @@ dotnet build -c Release</code></pre>
           <figure class="sv-graph relative-graph" aria-label="相対速度変化の乗算イメージ">
             <img src="assets/relative-sv-multiply.svg" alt="基準 SV からの差分を倍率で変化させる乗算のイメージ">
           </figure>
-        </div>
-        <p>終点の有効化を使うと、入力する相対変化量も始点から終点に向かって変化します。</p>
+        </div><br>
+        <p><strong>終点の有効化</strong> を併用すると、相対変化の始点値と終点値を別々に指定できます。</p>
         <div class="sv-graph-pair relative-graph-pair">
           <figure class="sv-graph relative-graph" aria-label="終点の有効化を使った相対速度変化の加算イメージ">
             <img src="assets/relative-sv-add-end.svg" alt="加算値が始点の -0.0 から終点の -1.0 へ変化するイメージ">
@@ -207,7 +207,7 @@ dotnet build -c Release</code></pre>
           <p>指定範囲内の対象タイミングに緑線を追加します。<br>SV や Volume を有効にしている場合は、始点から終点までの位置に応じて値を計算します。</p>
           <p>既存の緑線と重なる場合は、処理対象やオフセットに応じて<strong>既存緑線を整理</strong>しながら出力します。</p>
           <p>整理の内容として、対象ノーツの直前から対象ノーツまでの間にある既存緑線は、今回置く線と効果が重複しないよう削除対象になることがあります。
-            ただし、<span class="marker warn">選択していないオブジェクトの SV を戻すために必要な線</span>や、kiai の切り替わりを維持するために必要な線は残す・値を引き継ぐように扱われます。</p>
+            ただし、<strong>選択していないオブジェクトの SV を戻すために必要な線</strong>や、kiai の切り替わりを維持するために必要な線は残す・値を引き継ぐように扱われます。</p>
           <p>適用後は、範囲内や範囲後のスライダーの見た目が崩れにくいよう、必要に応じて <code>sliderLength</code> を補正します。</p>
           <p>kiai 状態は、直前の赤線 or 緑線を引き継ぎます。</p>
         </article>
@@ -221,7 +221,9 @@ dotnet build -c Release</code></pre>
       <article class="block">
         <h3>9. オフセット</h3>
         <p>チェックすると、Objects のみで緑線を置くときに、対象ノーツの少し前へ緑線をずらします。</p>
-        <p>設定画面のオフセットタイプが <strong>1/16 (1/12) offset</strong> の場合は、BPM から 1/16 分の時間を計算して前に置きます。<strong>ms offset</strong> の場合は、指定したミリ秒分前に置きます。</p>
+        <p>設定画面のオフセットタイプが<br>
+          <strong>1/16 (1/12) offset</strong> の場合は、BPM から 1/16 分の時間を計算して前に置きます。<br>
+          <strong>ms offset</strong> の場合は、指定したミリ秒分前に置きます。</p>
         <p><strong>1/12 を含める</strong> を有効にすると、1/12 snap の HitObject が含まれる場合に、前の HitObject の方へ SV 線が近づきすぎないように 1/12 分のオフセットを使います。それ以外の配置では 1/16 が使われます。</p>
         <p>Volume 変化を伴う SV 線を設置する場合は、プレイヤーが早入りして叩くことにより Volume 変化が適用されなくなる場合を防ぐためにこの機能を使うことを推奨します。</p>
       </article>
@@ -229,24 +231,29 @@ dotnet build -c Release</code></pre>
       <article class="block">
         <h3>10. 処理対象の選び方</h3>
         <div class="definition-list">
-          <div><strong>Objects のみ</strong><span>HitObject、小節線、BookMark、特定オブジェクトを基準に緑線を追加します。基本モードです。</span></div>
-          <div><strong>BeatSnaps</strong><span>赤線の BPM からビートスナップ間隔を計算し、指定範囲内に一定間隔で緑線を追加します。<br>
-            ノーツがない場所で Volume 変化のグラデーションを設置したい場合などに使います。赤線をまたぐ場合は次の BPM に合わせて間隔を再計算します。</span></div>
-          <div><strong>緑線</strong><span>既存の緑線を基準に SV や Volume を更新します。<br>既に置いてある緑線のカーブだけを整えたい場合に使います。</span></div>
+          <div><strong>Objects のみ</strong><span><strong>HitObject、小節線、BookMark、特定オブジェクト</strong>を基準に緑線を追加します。基本モードです。</span></div>
+          <div><strong>BeatSnaps</strong><span>赤線の BPM からビートスナップ間隔を計算し、指定範囲内に<strong>一定間隔で緑線を追加</strong>します。<br>
+            ノーツがない場所で Volume 変化のグラデーションを設置したい場合などに使います。<br>
+            赤線をまたぐ場合は次の BPM に合わせて間隔を再計算します。</span></div>
+          <div><strong>緑線</strong><span><strong>既存の緑線</strong>を基準に SV や Volume を更新します。<br>既に置いてある緑線のカーブだけを整えたい場合に使います。</span></div>
         </div>
       </article>
 
       <article class="block">
         <h3>Objects のみ の詳細</h3>
         <div class="manual-table">
-          <div><strong>すべての Object</strong><span>全ての Object（ノーツ、スライダー、スピナー、小節線、BookMark）を対象に緑線を置きます。<br></span></div>
-          <div><strong>小節線のみ</strong><span>小節線を対象にします。ノーツがない小節線、ノーツがある小節線、両方を対象とし緑線を置きます。<br>
+          <div><strong>すべての Object</strong><span><strong>全ての Object（ノーツ、スライダー、スピナー、小節線、BookMark）</strong>を対象に緑線を置きます。<br></span></div>
+          <div><strong>小節線のみ</strong><span><strong>小節線</strong>を対象にします。<br>
+            ノーツがない小節線、ノーツがある小節線、両方を対象とし緑線を置きます。<br>
             それぞれの小節線の次の Object にも戻し用の緑線を自動で置いて SV が意図せず次の区間へ残り続けないようにします。</span></div>
-          <div><strong>小節線以外</strong><span>小節線と同じタイミングではない Object を対象にします。小節線にも戻し用の緑線を自動で置いて SV が意図せず小節線にかからないようにします。</span></div>
-          <div><strong>BookMark のみ</strong><span>BookMark と同じタイミングにある地点だけを対象にします。ノーツがない BookMark、ノーツがある BookMark、両方を対象とし緑線を置きます。<br>
+          <div><strong>小節線以外</strong><span>小節線と同じタイミングではない Object を対象にします。<br>
+            小節線にも戻し用の緑線を自動で置いて SV が意図せず小節線にかからないようにします。</span></div>
+          <div><strong>BookMark のみ</strong><span><strong>BookMark</strong> と同じタイミングにある地点だけを対象にします。<br>
+            ノーツがない BookMark、ノーツがある BookMark、両方を対象とし緑線を置きます。<br>
             それぞれの BookMark の次の Object にも戻し用の緑線を自動で置いて SV が意図せず次の区間へ残り続けないようにします。</span></div>
-          <div><strong>BookMark 以外</strong><span>BookMark が付いていない Object を対象にします。BookMark にも戻し用の緑線を自動で置いて SV が意図せず BookMark にかからないようにします。<br>目印を付けた場所だけを避けたい場合に使います。</span></div>
-          <div><strong>特定のオブジェクトのみ</strong><span>通常 Don、通常 Kat、通常 Slider、大音符 Don、大音符 Kat、大音符 Slider、Spinner を個別に選び、選択した種類に一致するオブジェクトだけを処理します。<br>
+          <div><strong>BookMark 以外</strong><span>BookMark が付いていない Object を対象にします。<br>
+            BookMark にも戻し用の緑線を自動で置いて SV が意図せず BookMark にかからないようにします。<br>目印を付けた場所だけを避けたい場合に使います。</span></div>
+          <div><strong>特定のオブジェクトのみ</strong><span><strong>通常 Don、通常 Kat、通常 Slider、大音符 Don、大音符 Kat、大音符 Slider、Spinner</strong> を個別に選び、選択した種類に一致するオブジェクトだけを処理します。<br>
             選択していない種類のオブジェクトに対応する既存の緑線は、基本的に触りません。<br>
             このモードでは、選んだオブジェクトの直前または同時刻に緑線を置き、次のノーツ側にも戻し用の緑線を自動で置いて SV が意図せず次の区間へ残り続けないようにします。</span></div>
         </div>
@@ -267,19 +274,19 @@ dotnet build -c Release</code></pre>
       </div>
 
       <div class="definition-list tall">
-        <div><strong>オフセット変更 (all diffs)</strong><span>同じ曲フォルダ内の全 .osu ファイルを対象に、指定ミリ秒分タイミングを移動します。<br>
+        <div><strong>オフセット変更 (all diffs)</strong><span>同じ曲フォルダ内の全 .osu ファイルを対象に、指定ミリ秒分<strong>タイミングを移動</strong>します。<br>
           PreviewTime、Bookmarks、TimingPoints、HitObjects、動画イベントの開始時刻が移動対象です。</span></div>
-        <div><strong>ヒットサウンド設定</strong><span>現在の難易度を対象に、Kat を Clap または Whistle へ統一する機能です。<br>
+        <div><strong>ヒットサウンド設定</strong><span>現在の難易度を対象に、Kat を <strong>Clap または Whistle へ統一</strong>する機能です。<br>
           Don 系のノーツは基本的に変更せず、Kat と大音符 Kat に選択したヒットサウンドを反映します。</span></div>
         <div><strong>ノーツ座標設定</strong><span>現在の難易度のノーツ座標を書き換えます。<br>
-          Center は X=256 / Y=192 の中央寄せです。<br>
-          Separate は Don、Kat、大音符 Don、大音符 Kat ごとに設定画面の座標を使います。<br>
-          Random はノーツごとにランダムな座標を設定します。スライダーは制御点も移動します。</span></div>
-        <div><strong>タグエディタ (all diffs)</strong><span>タグ入力欄の内容を、同じ曲フォルダ内の全難易度の Metadata に反映します。</span></div>
-        <div><strong>設定コピー (all diffs)</strong><span>現在の難易度から全難易度へ設定をコピーします。<br>
+          <strong>Center</strong> は X=256 / Y=192 の中央寄せです。<br>
+          <strong>Separate</strong> は Don、Kat、大音符 Don、大音符 Kat ごとに設定画面の座標を使います。<br>
+          <strong>Random</strong> はノーツごとにランダムな座標を設定します。スライダーは制御点も移動します。</span></div>
+        <div><strong>タグエディタ (all diffs)</strong><span>タグ入力欄の内容を、同じ曲フォルダ内の<strong>全難易度の Metadata に反映</strong>します。</span></div>
+        <div><strong>設定コピー (all diffs)</strong><span>現在の難易度から<strong>全難易度へ設定をコピー</strong>します。<br>
           Metadata、BG、Preview、Timing Points を選べます。<br>
           Timing Points は赤線をコピーし、既存の緑線は各難易度のものを残して出力します。</span></div>
-        <div><strong>再スナップ</strong><span>現在の難易度を対象に、指定範囲内のノーツを選択したビートスナップ間隔へ移動します。<br>
+        <div><strong>再スナップ</strong><span>現在の難易度を対象に、指定範囲内のノーツを<strong>選択したビートスナップ間隔へ移動</strong>します。<br>
           範囲を指定しなかった場合は、最初のノーツから最後のノーツまでを範囲として扱います。</span></div>
       </div>
 
@@ -324,10 +331,10 @@ dotnet build -c Release</code></pre>
 
       <div class="definition-list tall">
         <div><strong>Timing</strong><span>osu! の現在再生位置を <code>mm:ss:fff</code> 形式で表示します。</span></div>
-        <div><strong>BPM</strong><span>現在位置に適用されている赤線の BPM を表示します。</span></div>
-        <div><strong>SV</strong><span>現在位置に適用されている SV を表示します。</span></div>
-        <div><strong>Volume</strong><span>現在位置に適用されている Volume を表示します。</span></div>
-        <div><strong>見た目 BPM</strong><span>BPM、SV、SliderMultiplier をもとに、見た目上のスクロール速度を BPM 相当で表示します。</span></div>
+        <div><strong>BPM</strong><span>現在位置に適用されている<strong>赤線の BPM</strong> を表示します。</span></div>
+        <div><strong>SV</strong><span>現在位置に適用されている <strong>SV</strong> を表示します。</span></div>
+        <div><strong>見た目 BPM</strong><span>BPM、SV、SliderMultiplier をもとに、<strong>見た目上のスクロール速度</strong>を BPM 相当で表示します。</span></div>
+        <div><strong>Volume</strong><span>現在位置に適用されている <strong>Volume</strong> を表示します。</span></div>
       </div>
 
       <article class="block">
@@ -345,15 +352,21 @@ dotnet build -c Release</code></pre>
       </div>
 
       <div class="definition-list tall">
-        <div><strong>言語設定</strong><span>English / 日本語を切り替えます。</span></div>
-        <div><strong>バックアップ保持上限</strong><span>譜面ごとに保持するバックアップ数です。<br>
+        <div><strong>言語設定</strong><span><strong>English / 日本語</strong>を切り替えます。</span></div>
+        <div><strong>バックアップ保持上限</strong><span>譜面ごとに保持する<strong>バックアップ数</strong>です。<br>
           1から100の整数を指定します。保存時に古いバックアップが整理されます。</span></div>
-        <div><strong>オフセットタイプ</strong><span>SV Editor のオフセット入力を、スナップ基準またはミリ秒基準に切り替えます。</span></div>
-        <div><strong>ノーツ配置設定</strong><span>Separate 使用時の Don、Kat、大音符 Don、大音符 Kat の X / Y 座標を設定します。<br>
-          X は 0 から 512、Y は 0 から 384 の範囲です。</span></div>
-        <div><strong>Unicode対応</strong><span>譜面名表示にTitleUnicode / ArtistUnicodeを使います。<br>
+        <div><strong>オフセットタイプ</strong><span>SV Editor のオフセット入力を、<strong>スナップ基準</strong>または<strong>ミリ秒基準</strong>に切り替えます。</span></div>
+        <div><strong>ノーツ配置設定</strong><span><strong>Separate</strong> 使用時の Don、Kat、大音符 Don、大音符 Kat の X / Y 座標を設定します。<br>
+          X は 0 から 512、Y は 0 から 384 の範囲です。<br>
+          初期値は<br>
+          Don : X=64 / Y=64<br>
+          Kat : X=448 / Y=64<br>
+          大音符 Don : X=64 / Y=320<br>
+          大音符 Kat : X=448 / Y=320<br>
+          です。</span></div>
+        <div><strong>Unicode対応</strong><span>譜面名表示に <strong>TitleUnicode / ArtistUnicode</strong> を使います。<br>
           日本語や特殊文字の曲名を表示できます。</span></div>
-        <div><strong>アドバンスモード</strong><span>相対速度変化や Timing Property など、追加の編集項目を表示します。</span></div>
+        <div><strong>アドバンスモード</strong><span>相対速度変化や Timing Property など、<strong>追加の編集項目を表示</strong>します。</span></div>
       </div>
     </section>
 
