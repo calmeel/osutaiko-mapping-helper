@@ -13,7 +13,6 @@
       <h1>osu!taiko Mapping Helper 使用説明書</h1>
     </div>
     <div class="header-meta" aria-label="ドキュメント情報">
-      <span>Version 1.1.0-beta</span>
       <span>Japanese</span>
       <a href="index.en.html">English</a>
       <a href="https://github.com/miyagish1m4/osutaiko-mapping-helper">GitHub</a>
@@ -74,7 +73,8 @@
 
       <div class="callout">
         <h3>まず覚えること</h3>
-        <p>このツールの基本は「<strong>osu! で対象譜面を開く</strong>」「<strong>ツールで条件を入力する</strong>」「<strong>実行する</strong>」「osu! で <kbd>Ctrl</kbd> + <kbd>L</kbd> を押す」です。成功メッセージだけでは osu! 側の表示は更新されないため、<span class="marker warn">再読み込みまでを1セット</span>にしてください。</p>
+        <p>このツールの基本は「<strong>osu! で対象譜面を開く</strong>」「<strong>ツールで条件を入力する</strong>」「<strong>実行する</strong>」「osu! で <kbd>Ctrl</kbd> + <kbd>L</kbd> を押す」です。<br>
+          <span class="marker warn">成功メッセージだけでは osu! 側の表示は更新されないため、再読み込みまでを1セット</span>にしてください。</p>
       </div>
     </section>
 
@@ -85,7 +85,7 @@
         <p>ビルド、起動、タイミング指定、実行後の確認までの共通手順です。</p>
       </div>
 
-      <div class="content-columns">
+      <div class="content-columns start-columns">
         <article class="block">
           <h3>必要な環境</h3>
           <ul>
@@ -96,19 +96,23 @@
           </ul>
         </article>
         <article class="block">
-          <h3>起動方法</h3>
-          <p>配布されている実行ファイルがある場合は、基本的に <code>osu!taiko Mapping Helper.exe</code> を実行すれば起動できます。<br>osu! を起動し、エディタで対象の taiko 譜面を開いておくと、ツールが現在の譜面を読み取れます。</p>
-          <p>ソースから動かす場合だけ、Visual Studio で <code>osu!taiko Mapping Helper.sln</code> を開いてビルドします。<br>開発者向けのコマンドライン例は次の通りです。</p>
-          <pre><code>dotnet restore
-dotnet build -c Release</code></pre>
+          <h3>ダウンロード方法</h3>
+          <ol class="compact-steps">
+            <li>右上の <strong>GitHub</strong> ボタンから <a href="https://github.com/miyagish1m4/osutaiko-mapping-helper">miyagish1m4/osutaiko-mapping-helper</a> を開きます。</li>
+            <li>右側にある <a href="https://github.com/miyagish1m4/osutaiko-mapping-helper/releases">Releases</a> を開きます。</li>
+            <li><strong>Tag</strong> の数値が最新のバージョンをクリックします。</li>
+            <li><code>osu.taiko.Mapping.Helper.v1.1.0-beta.zip</code> をダウンロードします。</li>
+            <li><strong>Source code</strong> はアプリの実行には不要です。</li>
+            <li>zip を解凍し、<code>osu!taiko Mapping Helper.exe</code> を実行します。</li>
+          </ol>
         </article>
       </div>
 
       <article class="block">
-        <h3>基本の流れ</h3>
+        <h3>起動方法</h3>
         <ol class="compact-steps">
           <li>osu! を起動し、エディタで編集したい taiko 譜面を開きます。</li>
-          <li>osu!taiko Mapping Helper を起動します。</li>
+          <li><code>osu!taiko Mapping Helper.exe</code> を起動します。</li>
           <li>ツール上部の譜面名や背景表示が更新されることを確認します。</li>
           <li>メニューから <strong>SV Editor</strong>、<strong>Utility</strong>、<strong>BG Setter</strong> を選びます。</li>
           <li>条件を入力して <strong>実行</strong> を押します。</li>
@@ -181,8 +185,8 @@ dotnet build -c Release</code></pre>
 
       <article class="block">
         <h3>6. 相対速度変化</h3>
-        <p>設定のアドバンスモードを有効にすると表示されます。<br>
-          通常は入力した SV をそのまま使いますが、相対速度変化では<strong>処理前の SV を参照</strong>して、新しい SV を計算します。<br><br>
+        <p>設定の<strong>アドバンスモード</strong>を有効にすると表示されます。<br>
+          通常は入力した SV をそのまま使いますが、相対速度変化では<strong>処理前に直前にある SV を参照</strong>して、新しい SV を計算します。<br><br>
         <strong>乗算</strong> は <code>(現在の SV - 基準 SV) * 入力 SV + 基準 SV</code> の形で変化します。<br>
         <strong>加算</strong> は現在の SV に入力 SV を足します。</p>
         <div class="sv-graph-pair relative-graph-pair">
@@ -210,7 +214,7 @@ dotnet build -c Release</code></pre>
           <p>指定範囲内の対象タイミングに緑線を追加します。<br>SV や Volume を有効にしている場合は、始点から終点までの位置に応じて値を計算します。</p>
           <p>既存の緑線と重なる場合は、処理対象やオフセットに応じて<strong>既存緑線を整理</strong>しながら出力します。</p>
           <p>整理の内容として、対象ノーツの直前から対象ノーツまでの間にある既存緑線は、今回置く線と効果が重複しないよう削除対象になることがあります。
-            ただし、<strong>選択していないオブジェクトの SV を戻すために必要な線</strong>や、kiai の切り替わりを維持するために必要な線は残す・値を引き継ぐように扱われます。</p>
+            ただし、<strong>選択していない Object の SV を戻すために必要な線</strong>や、kiai の切り替わりを維持するために必要な線は残す・値を引き継ぐように扱われます。</p>
           <p>適用後は、範囲内や範囲後のスライダーの見た目が崩れにくいように、必要に応じて <code>sliderLength</code> を補正します。</p>
           <p>kiai 状態は、直前の赤線 or 緑線を引き継ぎます。</p>
         </article>
@@ -225,8 +229,8 @@ dotnet build -c Release</code></pre>
         <h3>9. オフセット</h3>
         <p>チェックすると、Objects のみで緑線を置くときに、対象ノーツの少し前へ緑線をずらします。</p>
         <p>設定画面のオフセットタイプが<br>
-          <strong>1/16 (1/12) offset</strong> の場合は、BPM から 1/16 分の時間を計算して前に置きます。<br>
-          <strong>ms offset</strong> の場合は、指定したミリ秒分前に置きます。</p>
+          <strong>1/16 (1/12) オフセット</strong> の場合は、BPM から 1/16 分の時間を計算して前に置きます。<br>
+          <strong>ms オフセット</strong> の場合は、指定したミリ秒分前に置きます。</p>
         <p><strong>1/12 を含める</strong> を有効にすると、1/12 snap の HitObject が含まれる場合に、前の HitObject の方へ SV 線が近づきすぎないように 1/12 分のオフセットを使います。それ以外の配置では 1/16 が使われます。</p>
         <p>Volume 変化を伴う SV 線を設置する場合は、プレイヤーが早入りして叩くことにより Volume 変化が適用されなくなる場合を防ぐためにこの機能を使うことを推奨します。</p>
       </article>
@@ -234,16 +238,23 @@ dotnet build -c Release</code></pre>
       <article class="block">
         <h3>10. 処理対象の選び方</h3>
         <div class="definition-list">
-          <div><strong>Objects のみ</strong><span><strong>HitObject、小節線、BookMark、特定オブジェクト</strong>を基準に緑線を追加します。基本モードです。</span></div>
-          <div><strong>BeatSnaps</strong><span>赤線の BPM からビートスナップ間隔を計算し、指定範囲内に<strong>一定間隔で緑線を追加</strong>します。<br>
+          <div><strong>Objects のみ</strong><span><strong>HitObject、小節線、BookMark、特定 Object </strong>を基準に緑線を追加します。基本モードです。</span></div>
+          <div><strong>BeatSnaps</strong><span>HitObject の有無にかかわらず、<strong>指定する BeatSnap 間隔で緑線</strong>を引きます。<br>
             ノーツがない場所で Volume 変化のグラデーションを設置したい場合などに使います。<br>
-            赤線をまたぐ場合は次の BPM に合わせて間隔を再計算します。</span></div>
-          <div><strong>緑線</strong><span><strong>既存の緑線</strong>を基準に SV や Volume を更新します。<br>既に置いてある緑線のカーブだけを整えたい場合に使います。</span></div>
+            ※オフセットは適用されません。</span></div>
+          <div><strong>緑線</strong><span>設定の<strong>アドバンスモード</strong>を有効にすると表示されます。<br>
+            <strong>既に置かれている緑線</strong>の SV 値・ Volume 値を修正します。<br>
+            ※オフセットは適用されません。</span></div>
+          <div><strong>赤線</strong><span>設定の<strong>アドバンスモード</strong>を有効にすると表示されます。<br>
+            <strong>設定した見た目 BPM</strong> になるように、既に置かれている赤線に緑線を引きます。<br>
+            BPM が細かく変化する曲で、見た目上のスクロール速度を統一したい際などに使用します。<br>
+            ※オフセットは適用されません。
+          </span></div>
         </div>
       </article>
 
       <article class="block">
-        <h3>Objects のみ の詳細</h3>
+        <h3>Objects のみの詳細</h3>
         <div class="manual-table">
           <div><strong>すべての Object</strong><span><strong>指定範囲内の全ての Object（ノーツ、スライダー、スピナー、小節線、BookMark）</strong>を対象に緑線を置きます。<br></span></div>
           <div><strong>小節線のみ</strong><span><strong>小節線</strong>を対象にします。<br>
@@ -256,9 +267,9 @@ dotnet build -c Release</code></pre>
             それぞれの BookMark の次の Object にも戻し用の緑線を自動で置いて SV が意図せず次の区間へ残り続けないようにします。</span></div>
           <div><strong>BookMark 以外</strong><span>BookMark が付いていない Object を対象にします。<br>
             BookMark にも戻し用の緑線を自動で置いて SV が意図せず BookMark にかからないようにします。<br>目印を付けた場所だけを避けたい場合に使います。</span></div>
-          <div><strong>特定のオブジェクトのみ</strong><span><strong>通常 Don、通常 Kat、通常 Slider、大音符 Don、大音符 Kat、大音符 Slider、Spinner</strong> を個別に選び、選択した種類に一致するオブジェクトだけを処理します。<br>
-            選択していない種類のオブジェクトに対応する既存の緑線は、基本的に触りません。<br>
-            このモードでは、選んだオブジェクトの直前または同時刻に緑線を置き、次のノーツ側にも戻し用の緑線を自動で置いて SV が意図せず次の区間へ残り続けないようにします。</span></div>
+          <div><strong>特定の Object のみ</strong><span><strong>通常 Don、通常 Kat、通常スライダー、大音符 Don、大音符 Kat、大音符スライダー、スピナー</strong> を個別に選び、選択した種類に一致する Object だけを処理します。<br>
+            選択していない種類の Object に対応する既存の緑線は、基本的に触りません。<br>
+            このモードでは、選んだ Object の直前または同時刻に緑線を置き、次のノーツ側にも戻し用の緑線を自動で置いて SV が意図せず次の区間へ残り続けないようにします。</span></div>
         </div>
       </article>
 
@@ -329,7 +340,7 @@ dotnet build -c Release</code></pre>
       <div class="panel-header">
         <p class="eyebrow">Timing Property</p>
         <h2>現在位置の譜面情報を確認する</h2>
-        <p>Timing Property は、編集対象を書き換える画面ではなく、osu! の現在再生位置に対応する値を確認するための補助画面です。設定のアドバンスモードを有効にしている場合にメニューへ表示されます。</p>
+        <p>Timing Property は、編集対象を書き換える画面ではなく、osu! の現在再生位置に対応する値を確認するための補助画面です。設定の<strong>アドバンスモード</strong>を有効にしている場合にメニューへ表示されます。</p>
       </div>
 
       <div class="definition-list tall">
@@ -392,6 +403,12 @@ dotnet build -c Release</code></pre>
             公開前の譜面や作業中のセットでは、曲フォルダごと別の場所へコピーしてから試すと安全です。</p>
         </article>
       </div>
+
+      <article class="block warning">
+        <h3>免責事項</h3>
+        <p>このツールの使用、またはこのツールに関連して発生したすべての問題は、自己責任でお願いいたします。<br>
+          製作者および配布者は一切の責任を負いません。</p>
+      </article>
 
       <article class="block">
         <h3>実行後の確認</h3>

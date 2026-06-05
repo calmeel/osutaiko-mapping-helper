@@ -13,7 +13,6 @@
       <h1>osu!taiko Mapping Helper User Guide</h1>
     </div>
     <div class="header-meta" aria-label="Document information">
-      <span>Version 1.1.0-beta</span>
       <a href="index.html">Japanese</a>
       <span>English</span>
       <a href="https://github.com/miyagish1m4/osutaiko-mapping-helper">GitHub</a>
@@ -74,7 +73,8 @@
 
       <div class="callout">
         <h3>Basic workflow</h3>
-        <p>The common flow is: <strong>open the target beatmap in osu!</strong>, <strong>enter conditions in the tool</strong>, <strong>execute the process</strong>, and then press <kbd>Ctrl</kbd> + <kbd>L</kbd> in osu!. A success message means the file was written, but the osu! editor view is not refreshed until you reload it.</p>
+        <p>The common flow is: <strong>open the target beatmap in osu!</strong>, <strong>enter conditions in the tool</strong>, <strong>execute the process</strong>, and then press <kbd>Ctrl</kbd> + <kbd>L</kbd> in osu!.<br>
+          A success message means the file was written, but <span class="marker warn">the osu! editor view is not refreshed until you reload it</span>.</p>
       </div>
     </section>
 
@@ -85,7 +85,7 @@
         <p>This section covers the shared flow from launch to checking the result.</p>
       </div>
 
-      <div class="content-columns">
+      <div class="content-columns start-columns">
         <article class="block">
           <h3>Requirements</h3>
           <ul>
@@ -96,19 +96,23 @@
           </ul>
         </article>
         <article class="block">
-          <h3>Launch</h3>
-          <p>If you have a released executable, run <code>osu!taiko Mapping Helper.exe</code>. Start osu!, open the target taiko beatmap in the editor, and the tool will read that beatmap.</p>
-          <p>Building from source is mainly for developers. Open <code>osu!taiko Mapping Helper.sln</code> in Visual Studio, or build from the command line:</p>
-          <pre><code>dotnet restore
-dotnet build -c Release</code></pre>
+          <h3>Download</h3>
+          <ol class="compact-steps">
+            <li>Open <a href="https://github.com/miyagish1m4/osutaiko-mapping-helper">miyagish1m4/osutaiko-mapping-helper</a> from the <strong>GitHub</strong> button in the upper-right corner.</li>
+            <li>Open <a href="https://github.com/miyagish1m4/osutaiko-mapping-helper/releases">Releases</a> on the right side of the GitHub page.</li>
+            <li>Click the release with the latest numeric <strong>Tag</strong>.</li>
+            <li>Download <code>osu.taiko.Mapping.Helper.v1.1.0-beta.zip</code>.</li>
+            <li><strong>Source code</strong> is not needed to run the app.</li>
+            <li>Extract the zip file and run <code>osu!taiko Mapping Helper.exe</code>.</li>
+          </ol>
         </article>
       </div>
 
       <article class="block">
-        <h3>Basic flow</h3>
+        <h3>Launch</h3>
         <ol class="compact-steps">
           <li>Start osu! and open the taiko beatmap you want to edit.</li>
-          <li>Start osu!taiko Mapping Helper.</li>
+          <li>Start <code>osu!taiko Mapping Helper.exe</code>.</li>
           <li>Check that the beatmap name and background information in the tool are updated.</li>
           <li>Choose <strong>SV Editor</strong>, <strong>Utility</strong>, or <strong>BG Setter</strong> from the menu.</li>
           <li>Enter the conditions and press <strong>Execute</strong>.</li>
@@ -235,10 +239,17 @@ dotnet build -c Release</code></pre>
         <h3>10. Target selection</h3>
         <div class="definition-list">
           <div><strong>Only Objects</strong><span>Adds green lines based on <strong>HitObjects, barlines, BookMarks, or specific objects</strong>. This is the basic mode.</span></div>
-          <div><strong>BeatSnaps</strong><span>Calculates beat snap intervals from red-line BPM and adds green lines at <strong>regular intervals</strong> in the selected range.<br>
+          <div><strong>BeatSnaps</strong><span>Adds green lines at the <strong>specified beat snap divisor</strong>, regardless of whether HitObject are present.<br>
             Use this when you want to place a volume gradient where there are no notes.<br>
-            If the range crosses a red line, intervals after that point are recalculated using the next BPM.</span></div>
-          <div><strong>Inherited Points</strong><span>Updates SV or Volume based on <strong>existing green lines</strong>.<br>Use this when you want to adjust a curve that is already made from green lines.</span></div>
+            *Offset will not be applied.</span></div>
+          <div><strong>Green Lines</strong><span>This option appears when <strong>AdvanceMode</strong> is enabled in Settings.<br>
+            Modifies the SV and Volume value of <strong>already placed green lines</strong>.<br>
+            *Offset will not be applied.</span></div>
+          <div><strong>Red Lines</strong><span>This option appears when <strong>AdvanceMode</strong> is enabled in Settings.<br>
+            Adds green lines on the existing red line to match the set <strong>Scroll Speed Setting (BPM)</strong>.<br>
+            This is useful when you want to unify the visual scrolling speed in songs where the BPM changes frequently.<br>
+            *Offset will not be applied.
+          </span></div>
         </div>
       </article>
 
@@ -389,6 +400,12 @@ dotnet build -c Release</code></pre>
             For published beatmaps or active worksets, copy the whole song folder somewhere else before testing.</p>
         </article>
       </div>
+
+      <article class="block warning">
+        <h3>Disclaimer</h3>
+        <p>Use this tool at your own risk. You are responsible for any issues that occur from using this tool or in connection with it.<br>
+          The creators and distributors accept no responsibility or liability.</p>
+      </article>
 
       <article class="block">
         <h3>Check after execution</h3>

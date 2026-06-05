@@ -325,6 +325,10 @@ details,
   gap: 0.8rem;
 }
 
+.start-columns {
+  grid-template-columns: minmax(18rem, 0.72fr) minmax(0, 1.28fr);
+}
+
 .block,
 .callout,
 .definition-list,
@@ -490,12 +494,15 @@ details,
   gap: 0.6rem;
 }
 
+.block a,
 .faq-list a {
   color: #bffdf6;
   font-weight: 700;
   text-decoration: none;
 }
 
+.block a:hover,
+.block a:focus-visible,
 .faq-list a:hover,
 .faq-list a:focus-visible {
   color: var(--brand);

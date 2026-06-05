@@ -20,7 +20,7 @@
   </style>
   <rect width="720" height="360" rx="10" fill="#0b1017"/>
   <rect x="20" y="18" width="680" height="324" rx="8" fill="#101823" stroke="#28374a"/>
-  <text class="formula" x="42" y="52">加算: 変化後 SV = 処理前 SV + 入力 SV</text>
+  <text class="formula" x="42" y="52">加算: 変化後 SV = 現在の SV + 入力 SV</text>
   <line class="axis" x1="48" y1="276" x2="675" y2="276"/>
   <line class="axis" x1="48" y1="296" x2="48" y2="82"/>
   <text class="caption" x="640" y="304">Timing</text>
