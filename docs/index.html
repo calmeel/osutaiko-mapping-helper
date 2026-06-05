@@ -210,13 +210,13 @@ dotnet build -c Release</code></pre>
           <p>既存の緑線と重なる場合は、処理対象やオフセットに応じて<strong>既存緑線を整理</strong>しながら出力します。</p>
           <p>整理の内容として、対象ノーツの直前から対象ノーツまでの間にある既存緑線は、今回置く線と効果が重複しないよう削除対象になることがあります。
             ただし、<strong>選択していないオブジェクトの SV を戻すために必要な線</strong>や、kiai の切り替わりを維持するために必要な線は残す・値を引き継ぐように扱われます。</p>
-          <p>適用後は、範囲内や範囲後のスライダーの見た目が崩れにくいよう、必要に応じて <code>sliderLength</code> を補正します。</p>
+          <p>適用後は、範囲内や範囲後のスライダーの見た目が崩れにくいように、必要に応じて <code>sliderLength</code> を補正します。</p>
           <p>kiai 状態は、直前の赤線 or 緑線を引き継ぎます。</p>
         </article>
         <article class="block">
           <h3>8. 削除タブ</h3>
           <p>指定範囲内の緑線を削除します。赤線は削除しません。</p>
-          <p>削除後は、範囲内や範囲後のスライダーの見た目が崩れにくいよう、必要に応じて <code>sliderLength</code> を補正します。</p>
+          <p>削除後は、範囲内や範囲後のスライダーの見た目が崩れにくいように、必要に応じて <code>sliderLength</code> を補正します。</p>
         </article>
       </div>
 
@@ -244,7 +244,7 @@ dotnet build -c Release</code></pre>
       <article class="block">
         <h3>Objects のみ の詳細</h3>
         <div class="manual-table">
-          <div><strong>すべての Object</strong><span><strong>全ての Object（ノーツ、スライダー、スピナー、小節線、BookMark）</strong>を対象に緑線を置きます。<br></span></div>
+          <div><strong>すべての Object</strong><span><strong>指定範囲内の全ての Object（ノーツ、スライダー、スピナー、小節線、BookMark）</strong>を対象に緑線を置きます。<br></span></div>
           <div><strong>小節線のみ</strong><span><strong>小節線</strong>を対象にします。<br>
             ノーツがない小節線、ノーツがある小節線、両方を対象とし緑線を置きます。<br>
             それぞれの小節線の次の Object にも戻し用の緑線を自動で置いて SV が意図せず次の区間へ残り続けないようにします。</span></div>
@@ -289,7 +289,7 @@ dotnet build -c Release</code></pre>
           Metadata、BG、Preview、Timing Points を選べます。<br>
           Timing Points は赤線をコピーし、既存の緑線は各難易度のものを残して出力します。</span></div>
         <div><strong>再スナップ</strong><span>現在の難易度を対象に、指定範囲内のノーツを<strong>選択したビートスナップ間隔へ移動</strong>します。<br>
-          範囲を指定しなかった場合は、最初のノーツから最後のノーツまでを範囲として扱います。</span></div>
+          全てのノーツを再スナップしたい場合は、範囲を指定しないでください。</span></div>
       </div>
 
       <article class="block">
