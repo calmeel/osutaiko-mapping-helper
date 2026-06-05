@@ -251,7 +251,8 @@ h3 {
 #tab-timing-property:checked ~ .tab-list label[for="tab-timing-property"],
 #tab-settings:checked ~ .tab-list label[for="tab-settings"],
 #tab-safety:checked ~ .tab-list label[for="tab-safety"],
-#tab-trouble:checked ~ .tab-list label[for="tab-trouble"] {
+#tab-trouble:checked ~ .tab-list label[for="tab-trouble"],
+#tab-members:checked ~ .tab-list label[for="tab-members"] {
   border-color: rgba(61, 214, 198, 0.5);
   color: var(--ink);
   background: var(--brand-soft);
@@ -275,7 +276,8 @@ h3 {
 #tab-timing-property:checked ~ #timing-property-panel,
 #tab-settings:checked ~ #settings-panel,
 #tab-safety:checked ~ #safety-panel,
-#tab-trouble:checked ~ #trouble-panel {
+#tab-trouble:checked ~ #trouble-panel,
+#tab-members:checked ~ #members-panel {
   display: block;
 }
 
@@ -461,6 +463,18 @@ details,
 
 .definition-list > div > span strong {
   color: var(--ink);
+}
+
+.definition-list a {
+  color: #bffdf6;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.definition-list a:hover,
+.definition-list a:focus-visible {
+  color: var(--brand);
+  text-decoration: underline;
 }
 
 .definition-list.tall > div {
