@@ -490,6 +490,18 @@ details,
   gap: 0.6rem;
 }
 
+.faq-list a {
+  color: #bffdf6;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.faq-list a:hover,
+.faq-list a:focus-visible {
+  color: var(--brand);
+  text-decoration: underline;
+}
+
 details {
   padding: 0.9rem 1rem;
 }
