@@ -189,9 +189,7 @@ h3 {
 }
 
 .header-meta a:hover,
-.header-meta a:focus-visible,
-.site-footer a:hover,
-.site-footer a:focus-visible {
+.header-meta a:focus-visible {
   color: var(--brand);
 }
 
@@ -199,7 +197,7 @@ h3 {
   display: grid;
   grid-template-columns: 15rem minmax(0, 1fr);
   gap: 1rem;
-  height: calc(100vh - 8.7rem);
+  height: calc(100vh - 6.9rem);
   min-height: 620px;
   padding: 1rem clamp(1rem, 4vw, 2.5rem);
 }
@@ -524,22 +522,6 @@ summary:focus-visible {
   color: var(--brand);
 }
 
-.site-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.8rem clamp(1rem, 4vw, 2.5rem) 1rem;
-  border-top: 1px solid var(--line);
-  color: var(--subtle);
-  background: rgba(13, 17, 23, 0.9);
-  font-size: 0.9rem;
-}
-
-.site-footer a {
-  color: var(--subtle);
-  text-decoration: none;
-}
-
 @media (max-width: 1080px) {
   .manual-shell {
     grid-template-columns: 1fr;
@@ -568,8 +550,7 @@ summary:focus-visible {
 }
 
 @media (max-width: 720px) {
-  .app-header,
-  .site-footer {
+  .app-header {
     flex-direction: column;
     align-items: stretch;
   }
