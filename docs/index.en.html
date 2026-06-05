@@ -171,6 +171,10 @@
         <p>When the Volume checkbox is enabled, you can specify the volume of the green lines.<br>
           Enter an integer from 5 to 100. Decimal values are not accepted.<br>
           If the Volume checkbox is disabled, the tool refers to the volume of the red or green line immediately before the processing point. Disable Volume when you want to edit only SV without changing volume.</p>
+        <p>When <strong>Apply to Red Lines</strong> is enabled, red lines inside the selected range are also changed to the specified Volume.<br>
+          Use this to prevent red lines and green lines at the same timing from ending up with different Volume values.</p>
+        <p>When this checkbox is disabled, red-line Volume values inside the range are left unchanged.<br>
+          This is useful when you intentionally want the first red line and its green line to have different Volume values, so the area before that line uses the red-line Volume and the area after it uses the green-line Volume.</p>
       </article>
 
       <div class="content-columns">
