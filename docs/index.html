@@ -13,7 +13,6 @@
       <h1>osu!taiko Mapping Helper 使用説明書</h1>
     </div>
     <div class="header-meta" aria-label="ドキュメント情報">
-      <span>Japanese</span>
       <a href="index.en.html">English</a>
       <a href="https://github.com/miyagish1m4/osutaiko-mapping-helper">GitHub</a>
       <a href="https://discord.gg/EG7AwfeGcW">Discord</a>
@@ -91,8 +90,6 @@
           <ul>
             <li>Windows</li>
             <li>osu! stable</li>
-            <li>.NET 8 Desktop Runtime、または .NET 8 SDK</li>
-            <li>ソースからビルドする場合は Visual Studio 2022 以降</li>
           </ul>
         </article>
         <article class="block">
@@ -101,7 +98,7 @@
             <li>右上の <strong>GitHub</strong> ボタンから <a href="https://github.com/miyagish1m4/osutaiko-mapping-helper">miyagish1m4/osutaiko-mapping-helper</a> を開きます。</li>
             <li>右側にある <a href="https://github.com/miyagish1m4/osutaiko-mapping-helper/releases">Releases</a> を開きます。</li>
             <li><strong>Tag</strong> の数値が最新のバージョンをクリックします。</li>
-            <li><code>osu.taiko.Mapping.Helper.v1.1.0-beta.zip</code> をダウンロードします。</li>
+            <li><code>osu.taiko.Mapping.Helper.vX.X.X.zip</code> をダウンロードします。</li>
             <li><strong>Source code</strong> はアプリの実行には不要です。</li>
             <li>zip を解凍し、<code>osu!taiko Mapping Helper.exe</code> を実行します。</li>
           </ol>
@@ -190,7 +187,7 @@
       <article class="block">
         <h3>6. 相対速度変化</h3>
         <p>設定の<strong>アドバンスモード</strong>を有効にすると表示されます。<br>
-          通常は入力した SV をそのまま使いますが、相対速度変化では<strong>処理前に直前にある SV を参照</strong>して、新しい SV を計算します。<br><br>
+          通常は入力した SV をそのまま使いますが、相対速度変化では<strong>対象のオブジェクトに適用されている SV を基準</strong>にして、新しい SV を計算します。<br><br>
         <strong>乗算</strong> は <code>(現在の SV - 基準 SV) * 入力 SV + 基準 SV</code> の形で変化します。<br>
         <strong>加算</strong> は現在の SV に入力 SV を足します。</p>
         <div class="sv-graph-pair relative-graph-pair">
@@ -234,7 +231,7 @@
         <p>チェックすると、Objects のみで緑線を置くときに、対象ノーツの少し前へ緑線をずらします。</p>
         <p>設定画面のオフセットタイプが<br>
           <strong>1/16 (1/12) オフセット</strong> の場合は、BPM から 1/16 分の時間を計算して前に置きます。<br>
-          <strong>ms オフセット</strong> の場合は、指定したミリ秒分前に置きます。</p>
+          <strong>ミリ秒 (ms) オフセット</strong> の場合は、指定したミリ秒分前に置きます。</p>
         <p><strong>1/12 を含める</strong> を有効にすると、1/12 snap の HitObject が含まれる場合に、前の HitObject の方へ SV 線が近づきすぎないように 1/12 分のオフセットを使います。それ以外の配置では 1/16 が使われます。</p>
         <p>Volume 変化を伴う SV 線を設置する場合は、プレイヤーが早入りして叩くことにより Volume 変化が適用されなくなる場合を防ぐためにこの機能を使うことを推奨します。</p>
       </article>
@@ -455,6 +452,13 @@
             1から100の範囲で指定でき、保存後に古いバックアップが整理されます。</p>
         </details>
         <details>
+          <summary>osu!lazer で使えない</summary>
+          <p><strong>osu!lazer はサポートしていません。</strong><br>
+            osu!lazer では、開いている譜面や現在位置をリアルタイムに読み取る機能を使用できません。<br>
+            また、osu!stable と osu!lazer では <strong>osu! file format</strong> が異なるため、osu!lazer の <code>.osu</code> ファイルへ書き込むと、想定していない動作につながる可能性があります。<br>
+            このツールは <strong>osu!stable でのみ使用してください。</strong></p>
+        </details>
+        <details>
           <summary>バグを報告したい</summary>
           <p>ツール上で不具合が発生した場合は、<a href="https://discord.gg/EG7AwfeGcW">Discord</a> の <code>bug-report</code> へ報告をお願いいたします。</p>
         </details>
@@ -484,7 +488,7 @@
         <div><strong>使用説明書の作成</strong><span>
           <a href="https://osu.ppy.sh/users/12029122">Vanity8</a>
         </span></div>
-        <div><strong>校閲<br>アプリ / 使用説明書</strong><span>
+        <div><strong>校閲</strong><span>
           <a href="https://osu.ppy.sh/users/14520910">Maimaing</a>
         </span></div>
         <div><strong>テスター</strong><span>

@@ -14,7 +14,6 @@
     </div>
     <div class="header-meta" aria-label="Document information">
       <a href="index.html">Japanese</a>
-      <span>English</span>
       <a href="https://github.com/miyagish1m4/osutaiko-mapping-helper">GitHub</a>
       <a href="https://discord.gg/EG7AwfeGcW">Discord</a>
     </div>
@@ -91,8 +90,6 @@
           <ul>
             <li>Windows</li>
             <li>osu! stable</li>
-            <li>.NET 8 Desktop Runtime, or .NET 8 SDK</li>
-            <li>Visual Studio 2022 or later if you build from source</li>
           </ul>
         </article>
         <article class="block">
@@ -101,7 +98,7 @@
             <li>Open <a href="https://github.com/miyagish1m4/osutaiko-mapping-helper">miyagish1m4/osutaiko-mapping-helper</a> from the <strong>GitHub</strong> button in the upper-right corner.</li>
             <li>Open <a href="https://github.com/miyagish1m4/osutaiko-mapping-helper/releases">Releases</a> on the right side of the GitHub page.</li>
             <li>Click the release with the latest numeric <strong>Tag</strong>.</li>
-            <li>Download <code>osu.taiko.Mapping.Helper.v1.1.0-beta.zip</code>.</li>
+            <li>Download <code>osu.taiko.Mapping.Helper.vX.X.X.zip</code>.</li>
             <li><strong>Source code</strong> is not needed to run the app.</li>
             <li>Extract the zip file and run <code>osu!taiko Mapping Helper.exe</code>.</li>
           </ol>
@@ -191,7 +188,7 @@
       <article class="block">
         <h3>6. Relative Mode</h3>
         <p>This option appears when <strong>AdvanceMode</strong> is enabled in Settings.<br>
-          Normally the entered SV is used as-is, but Relative Mode calculates the new SV by referring to the SV before processing.<br><br>
+          Normally, the entered SV is used as-is. In Relative Mode, the new SV is calculated <strong>based on the SV currently applied to the target object</strong>.<br><br>
         <strong>Multiply</strong> uses <code>(current SV - BaseSV) * input SV + BaseSV</code>.<br>
         <strong>Sum</strong> adds the input SV to the current SV.</p>
         <div class="sv-graph-pair relative-graph-pair">
@@ -452,6 +449,13 @@
             You can specify a value from 1 to 100, and old backups are cleaned up after saving.</p>
         </details>
         <details>
+          <summary>I cannot use the tool with osu!lazer</summary>
+          <p><strong>osu!lazer is not supported.</strong><br>
+            The tool cannot read the currently opened beatmap or playback position from osu!lazer in real time.<br>
+            In addition, osu!stable and osu!lazer use different <strong>osu! file formats</strong>, so writing to an osu!lazer <code>.osu</code> file may cause unexpected behavior.<br>
+            <strong>Use this tool with osu!stable only.</strong></p>
+        </details>
+        <details>
           <summary>I want to report a bug</summary>
           <p>If you encounter a bug in the tool, please report it in the <code>bug-report</code> channel on <a href="https://discord.gg/EG7AwfeGcW">Discord</a>.</p>
         </details>
@@ -481,7 +485,7 @@
         <div><strong>User Guide Writing</strong><span>
           <a href="https://osu.ppy.sh/users/12029122">Vanity8</a>
         </span></div>
-        <div><strong>Review<br>App / User Guide</strong><span>
+        <div><strong>Review</strong><span>
           <a href="https://osu.ppy.sh/users/14520910">Maimaing</a>
         </span></div>
         <div><strong>Testing</strong><span>
