@@ -20,7 +20,8 @@
   </header>
 
   <main class="manual-shell">
-    <input checked type="radio" name="manual-tab" id="tab-overview">
+    <input checked type="radio" name="manual-tab" id="tab-introduction">
+    <input type="radio" name="manual-tab" id="tab-overview">
     <input type="radio" name="manual-tab" id="tab-start">
     <input type="radio" name="manual-tab" id="tab-sv">
     <input type="radio" name="manual-tab" id="tab-utility">
@@ -32,6 +33,7 @@
     <input type="radio" name="manual-tab" id="tab-members">
 
     <nav class="tab-list" aria-label="説明書の章">
+      <label for="tab-introduction">ツール紹介</label>
       <label for="tab-overview">概要</label>
       <label for="tab-start">導入と基本操作</label>
       <label for="tab-sv">SV Editor</label>
@@ -43,6 +45,96 @@
       <label for="tab-trouble">困ったとき</label>
       <label for="tab-members">プロジェクトメンバー</label>
     </nav>
+
+    <section class="tab-panel introduction-panel" id="introduction-panel">
+      <div class="showcase-hero" style="--intro-hero-image: url('screenshot/BG Setter.png'); --intro-mobile-image: url('screenshot/SV Editor.png')">
+        <div class="showcase-hero-content">
+          <p class="eyebrow">Mapping Workflow Tool</p>
+          <h2>osu!taiko Mapping Helper</h2>
+          <p>Mapping で地味に手間のかかる作業を、少ない操作でまとめて処理できる osu!taiko 向け補助ツール。</p>
+          <div class="intro-actions">
+            <a class="primary-action" href="https://github.com/miyagish1m4/osutaiko-mapping-helper/releases">Download</a>
+            <label class="secondary-action" for="tab-overview">使用説明書を見る</label>
+            <a class="secondary-action" href="https://discord.gg/EG7AwfeGcW">Discord</a>
+          </div>
+          <div class="intro-meta" aria-label="対応環境">
+            <span>Windows</span>
+            <span>osu!stable</span>
+            <span>日本語 / English</span>
+          </div>
+        </div>
+      </div>
+
+      <header class="intro-heading">
+        <p class="eyebrow">Main Features</p>
+        <h2>4つの作業を、ひとつのツールで</h2>
+        <p>osu! エディタで開いている譜面を読み取り、繰り返しになりやすい編集や確認作業を補助します。</p>
+      </header>
+
+      <section class="intro-feature portrait-feature">
+        <div class="intro-feature-copy">
+          <p class="feature-number">01</p>
+          <h3>SV Editor</h3>
+          <p>ノーツ、小節線、BookMark、BeatSnap、既存の緑線などを基準に、SV と Volume をまとめて設定できます。</p>
+          <p>範囲内のグラデーション、特定オブジェクトだけへの適用、相対速度変化、既存緑線の整理にも対応します。</p>
+          <label class="text-action" for="tab-sv">SV Editor の説明を見る</label>
+        </div>
+        <figure class="intro-screenshot portrait-shot">
+          <img src="screenshot/SV Editor.png" alt="SV Editor の画面">
+        </figure>
+      </section>
+
+      <section class="intro-feature portrait-feature reverse">
+        <div class="intro-feature-copy">
+          <p class="feature-number">02</p>
+          <h3>Utility</h3>
+          <p>オフセット、ヒットサウンド、ノーツ座標、メタデータなど、SV 以外の編集をまとめて実行できます。</p>
+          <p>全難易度へのタグ変更や設定コピー、指定したビートスナップへの再スナップにも利用できます。</p>
+          <label class="text-action" for="tab-utility">Utility の説明を見る</label>
+        </div>
+        <figure class="intro-screenshot portrait-shot">
+          <img src="screenshot/Utility.png" alt="Utility の画面">
+        </figure>
+      </section>
+
+      <section class="intro-feature compact-feature">
+        <div class="intro-feature-copy">
+          <p class="feature-number">03</p>
+          <h3>Timing Property</h3>
+          <p>osu! エディタの現在位置に適用されている Timing、BPM、SV、Volume、見た目 BPM をリアルタイムに確認できます。</p>
+          <p>SV を設定する前の値確認や、作成した変化のチェックに使えます。</p>
+          <label class="text-action" for="tab-timing-property">Timing Property の説明を見る</label>
+        </div>
+        <figure class="intro-screenshot compact-shot">
+          <img src="screenshot/Timing Property.png" alt="Timing Property の画面">
+        </figure>
+      </section>
+
+      <section class="intro-feature landscape-feature reverse">
+        <div class="intro-feature-copy">
+          <p class="feature-number">04</p>
+          <h3>BG Setter</h3>
+          <p>背景画像を画面上で動かしながら、譜面に保存する BG の Y 座標を決定できます。</p>
+          <p>数値を繰り返し入力せず、実際の表示位置を見ながら調整できます。</p>
+          <label class="text-action" for="tab-bg">BG Setter の説明を見る</label>
+        </div>
+        <figure class="intro-screenshot landscape-shot">
+          <img src="screenshot/BG Setter.png" alt="BG Setter の画面">
+        </figure>
+      </section>
+
+      <div class="intro-cta">
+        <div>
+          <p class="eyebrow">Get Started</p>
+          <h3>最新バージョンをダウンロード</h3>
+          <p>osu!stable で対象の taiko 譜面を開き、ツールを起動するだけで始められます。</p>
+        </div>
+        <div class="intro-actions">
+          <a class="primary-action" href="https://github.com/miyagish1m4/osutaiko-mapping-helper/releases">Releases を開く</a>
+          <label class="secondary-action" for="tab-start">導入方法を見る</label>
+        </div>
+      </div>
+    </section>
 
     <section class="tab-panel" id="overview-panel">
       <div class="panel-header">

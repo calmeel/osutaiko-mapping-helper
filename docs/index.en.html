@@ -20,7 +20,8 @@
   </header>
 
   <main class="manual-shell">
-    <input checked type="radio" name="manual-tab" id="tab-overview">
+    <input checked type="radio" name="manual-tab" id="tab-introduction">
+    <input type="radio" name="manual-tab" id="tab-overview">
     <input type="radio" name="manual-tab" id="tab-start">
     <input type="radio" name="manual-tab" id="tab-sv">
     <input type="radio" name="manual-tab" id="tab-utility">
@@ -32,6 +33,7 @@
     <input type="radio" name="manual-tab" id="tab-members">
 
     <nav class="tab-list" aria-label="Guide sections">
+      <label for="tab-introduction">Introduction</label>
       <label for="tab-overview">Overview</label>
       <label for="tab-start">Setup and Basic Use</label>
       <label for="tab-sv">SV Editor</label>
@@ -43,6 +45,96 @@
       <label for="tab-trouble">Troubleshooting</label>
       <label for="tab-members">Project Members</label>
     </nav>
+
+    <section class="tab-panel introduction-panel" id="introduction-panel">
+      <div class="showcase-hero" style="--intro-hero-image: url('screenshot/BG Setter.en.png'); --intro-mobile-image: url('screenshot/SV Editor.en.png')">
+        <div class="showcase-hero-content">
+          <p class="eyebrow">Mapping Workflow Tool</p>
+          <h2>osu!taiko Mapping Helper</h2>
+          <p>A helper tool that turns small but time-consuming mapping tasks into quick, repeatable operations.</p>
+          <div class="intro-actions">
+            <a class="primary-action" href="https://github.com/miyagish1m4/osutaiko-mapping-helper/releases">Download</a>
+            <label class="secondary-action" for="tab-overview">View User Guide</label>
+            <a class="secondary-action" href="https://discord.gg/EG7AwfeGcW">Discord</a>
+          </div>
+          <div class="intro-meta" aria-label="Supported environment">
+            <span>Windows</span>
+            <span>osu!stable</span>
+            <span>Japanese / English</span>
+          </div>
+        </div>
+      </div>
+
+      <header class="intro-heading">
+        <p class="eyebrow">Main Features</p>
+        <h2>Four workflows, one tool</h2>
+        <p>The tool reads the beatmap currently opened in the osu! editor and helps with repetitive editing and value-checking tasks.</p>
+      </header>
+
+      <section class="intro-feature portrait-feature">
+        <div class="intro-feature-copy">
+          <p class="feature-number">01</p>
+          <h3>SV Editor</h3>
+          <p>Set SV and Volume using notes, barlines, BookMarks, BeatSnaps, existing green lines, and other targets.</p>
+          <p>Create gradients across a range, process specific object types, apply Relative Mode, and organize existing green lines.</p>
+          <label class="text-action" for="tab-sv">View SV Editor guide</label>
+        </div>
+        <figure class="intro-screenshot portrait-shot">
+          <img src="screenshot/SV Editor.en.png" alt="SV Editor window">
+        </figure>
+      </section>
+
+      <section class="intro-feature portrait-feature reverse">
+        <div class="intro-feature-copy">
+          <p class="feature-number">02</p>
+          <h3>Utility</h3>
+          <p>Run non-SV edits for Offset, Hitsound, note positions, Metadata, and other beatmap settings.</p>
+          <p>It also supports tag editing across all difficulties, settings copying, and resnapping notes to a selected beat snap.</p>
+          <label class="text-action" for="tab-utility">View Utility guide</label>
+        </div>
+        <figure class="intro-screenshot portrait-shot">
+          <img src="screenshot/Utility.en.png" alt="Utility window">
+        </figure>
+      </section>
+
+      <section class="intro-feature compact-feature">
+        <div class="intro-feature-copy">
+          <p class="feature-number">03</p>
+          <h3>Timing Property</h3>
+          <p>Check the Timing, BPM, SV, Volume, and Scroll Speed (BPM) applied at the current osu! editor position in real time.</p>
+          <p>Use it to inspect values before creating an SV effect or to verify the result afterward.</p>
+          <label class="text-action" for="tab-timing-property">View Timing Property guide</label>
+        </div>
+        <figure class="intro-screenshot compact-shot">
+          <img src="screenshot/Timing Property.en.png" alt="Timing Property window">
+        </figure>
+      </section>
+
+      <section class="intro-feature landscape-feature reverse">
+        <div class="intro-feature-copy">
+          <p class="feature-number">04</p>
+          <h3>BG Setter</h3>
+          <p>Move the background image on screen and choose the BG Y coordinate saved to the beatmap.</p>
+          <p>Adjust the position visually instead of repeatedly entering numeric values.</p>
+          <label class="text-action" for="tab-bg">View BG Setter guide</label>
+        </div>
+        <figure class="intro-screenshot landscape-shot">
+          <img src="screenshot/BG Setter.en.png" alt="BG Setter window">
+        </figure>
+      </section>
+
+      <div class="intro-cta">
+        <div>
+          <p class="eyebrow">Get Started</p>
+          <h3>Download the latest version</h3>
+          <p>Open the target taiko beatmap in osu!stable, then launch the tool to get started.</p>
+        </div>
+        <div class="intro-actions">
+          <a class="primary-action" href="https://github.com/miyagish1m4/osutaiko-mapping-helper/releases">Open Releases</a>
+          <label class="secondary-action" for="tab-start">View setup guide</label>
+        </div>
+      </div>
+    </section>
 
     <section class="tab-panel" id="overview-panel">
       <div class="panel-header">
